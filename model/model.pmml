@@ -1,0 +1,1610 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
+	<Header>
+		<Application name="JPMML-SkLearn" version="1.6.30"/>
+		<Timestamp>2021-09-29T01:40:46Z</Timestamp>
+	</Header>
+	<MiningBuildTask>
+		<Extension name="repr">PMMLPipeline(steps=[('classifier', RandomForestClassifier(criterion='entropy', max_depth=3, n_estimators=30,
+                       random_state=42))])</Extension>
+	</MiningBuildTask>
+	<DataDictionary>
+		<DataField name="Class" optype="categorical" dataType="integer">
+			<Value value="0"/>
+			<Value value="1"/>
+		</DataField>
+		<DataField name="editTextDTO-format" optype="continuous" dataType="float"/>
+		<DataField name="editTextDTO-change" optype="continuous" dataType="float"/>
+		<DataField name="code-format" optype="continuous" dataType="float"/>
+		<DataField name="code-change" optype="continuous" dataType="float"/>
+		<DataField name="gratitude" optype="continuous" dataType="float"/>
+		<DataField name="greetings" optype="continuous" dataType="float"/>
+		<DataField name="status" optype="continuous" dataType="float"/>
+		<DataField name="duplication" optype="continuous" dataType="float"/>
+		<DataField name="signature" optype="continuous" dataType="float"/>
+		<DataField name="inactive-link" optype="continuous" dataType="float"/>
+		<DataField name="ref-modification" optype="continuous" dataType="float"/>
+		<DataField name="complete-change" optype="continuous" dataType="float"/>
+		<DataField name="reputation" optype="continuous" dataType="float"/>
+		<DataField name="emotion" optype="continuous" dataType="float"/>
+	</DataDictionary>
+	<MiningModel functionName="classification" algorithmName="sklearn.ensemble._forest.RandomForestClassifier">
+		<MiningSchema>
+			<MiningField name="Class" usageType="target"/>
+			<MiningField name="greetings"/>
+			<MiningField name="ref-modification"/>
+			<MiningField name="editTextDTO-change"/>
+			<MiningField name="reputation"/>
+			<MiningField name="emotion"/>
+			<MiningField name="complete-change"/>
+			<MiningField name="status"/>
+			<MiningField name="code-change"/>
+			<MiningField name="duplication"/>
+			<MiningField name="gratitude"/>
+			<MiningField name="code-format"/>
+			<MiningField name="inactive-link"/>
+			<MiningField name="editTextDTO-format"/>
+			<MiningField name="signature"/>
+		</MiningSchema>
+		<Output>
+			<OutputField name="probability(0)" optype="continuous" dataType="double" feature="probability" value="0"/>
+			<OutputField name="probability(1)" optype="continuous" dataType="double" feature="probability" value="1"/>
+		</Output>
+		<LocalTransformations>
+			<DerivedField name="double(editTextDTO-change)" optype="continuous" dataType="double">
+				<FieldRef field="editTextDTO-change"/>
+			</DerivedField>
+			<DerivedField name="double(reputation)" optype="continuous" dataType="double">
+				<FieldRef field="reputation"/>
+			</DerivedField>
+			<DerivedField name="double(emotion)" optype="continuous" dataType="double">
+				<FieldRef field="emotion"/>
+			</DerivedField>
+			<DerivedField name="double(complete-change)" optype="continuous" dataType="double">
+				<FieldRef field="complete-change"/>
+			</DerivedField>
+			<DerivedField name="double(status)" optype="continuous" dataType="double">
+				<FieldRef field="status"/>
+			</DerivedField>
+			<DerivedField name="double(code-change)" optype="continuous" dataType="double">
+				<FieldRef field="code-change"/>
+			</DerivedField>
+			<DerivedField name="double(duplication)" optype="continuous" dataType="double">
+				<FieldRef field="duplication"/>
+			</DerivedField>
+			<DerivedField name="double(gratitude)" optype="continuous" dataType="double">
+				<FieldRef field="gratitude"/>
+			</DerivedField>
+			<DerivedField name="double(code-format)" optype="continuous" dataType="double">
+				<FieldRef field="code-format"/>
+			</DerivedField>
+			<DerivedField name="double(inactive-link)" optype="continuous" dataType="double">
+				<FieldRef field="inactive-link"/>
+			</DerivedField>
+			<DerivedField name="double(editTextDTO-format)" optype="continuous" dataType="double">
+				<FieldRef field="editTextDTO-format"/>
+			</DerivedField>
+			<DerivedField name="double(signature)" optype="continuous" dataType="double">
+				<FieldRef field="signature"/>
+			</DerivedField>
+		</LocalTransformations>
+		<Segmentation multipleModelMethod="average">
+			<Segment id="1">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(emotion)"/>
+						<MiningField name="double(complete-change)"/>
+						<MiningField name="double(status)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="126.88760757446289"/>
+							<Node>
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4256.0"/>
+								<Node score="1" recordCount="12">
+									<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="-0.5"/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="12"/>
+								</Node>
+								<Node score="1" recordCount="122">
+									<True/>
+									<ScoreDistribution value="0" recordCount="2"/>
+									<ScoreDistribution value="1" recordCount="120"/>
+								</Node>
+							</Node>
+							<Node score="0" recordCount="363">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="21008.5"/>
+								<ScoreDistribution value="0" recordCount="245"/>
+								<ScoreDistribution value="1" recordCount="118"/>
+							</Node>
+							<Node score="1" recordCount="583">
+								<True/>
+								<ScoreDistribution value="0" recordCount="285"/>
+								<ScoreDistribution value="1" recordCount="298"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(complete-change)" operator="lessOrEqual" value="0.5"/>
+							<Node score="0" recordCount="7">
+								<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="-0.5"/>
+								<ScoreDistribution value="0" recordCount="7"/>
+								<ScoreDistribution value="1" recordCount="0"/>
+							</Node>
+							<Node score="0" recordCount="59">
+								<True/>
+								<ScoreDistribution value="0" recordCount="46"/>
+								<ScoreDistribution value="1" recordCount="13"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="1">
+							<SimplePredicate field="double(status)" operator="lessOrEqual" value="0.5"/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="1"/>
+						</Node>
+						<Node score="0" recordCount="4">
+							<True/>
+							<ScoreDistribution value="0" recordCount="3"/>
+							<ScoreDistribution value="1" recordCount="1"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="2">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.7936286926269531"/>
+							<Node>
+								<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+								<Node score="0" recordCount="331">
+									<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="7.967959880828857"/>
+									<ScoreDistribution value="0" recordCount="226"/>
+									<ScoreDistribution value="1" recordCount="105"/>
+								</Node>
+								<Node score="0" recordCount="567">
+									<True/>
+									<ScoreDistribution value="0" recordCount="291"/>
+									<ScoreDistribution value="1" recordCount="276"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="10">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="10"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="60.57348823547363"/>
+							<Node score="1" recordCount="180">
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="71"/>
+								<ScoreDistribution value="1" recordCount="109"/>
+							</Node>
+							<Node score="1" recordCount="3">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="3"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="36">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="24820.0"/>
+							<ScoreDistribution value="0" recordCount="7"/>
+							<ScoreDistribution value="1" recordCount="29"/>
+						</Node>
+						<Node score="1" recordCount="24">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="24"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="3">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+						<MiningField name="double(code-format)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4256.0"/>
+							<Node score="1" recordCount="128">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3848.5"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="128"/>
+							</Node>
+							<Node score="1" recordCount="17">
+								<SimplePredicate field="double(code-format)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="4"/>
+								<ScoreDistribution value="1" recordCount="13"/>
+							</Node>
+							<Node score="1" recordCount="10">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="10"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+							<Node score="0" recordCount="794">
+								<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.732655942440033"/>
+								<ScoreDistribution value="0" recordCount="500"/>
+								<ScoreDistribution value="1" recordCount="294"/>
+							</Node>
+							<Node score="1" recordCount="181">
+								<True/>
+								<ScoreDistribution value="0" recordCount="66"/>
+								<ScoreDistribution value="1" recordCount="115"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="21">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="21"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="4">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(inactive-link)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(inactive-link)" operator="lessOrEqual" value="0.5"/>
+								<Node score="1" recordCount="151">
+									<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4256.0"/>
+									<ScoreDistribution value="0" recordCount="6"/>
+									<ScoreDistribution value="1" recordCount="145"/>
+								</Node>
+								<Node score="0" recordCount="988">
+									<True/>
+									<ScoreDistribution value="0" recordCount="544"/>
+									<ScoreDistribution value="1" recordCount="444"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="1">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="1"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="11">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="11"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="5">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(complete-change)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(editTextDTO-format)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.930414855480194"/>
+							<Node>
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4371.5"/>
+								<Node score="1" recordCount="106">
+									<SimplePredicate field="double(editTextDTO-format)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="1"/>
+									<ScoreDistribution value="1" recordCount="105"/>
+								</Node>
+								<Node score="1" recordCount="16">
+									<True/>
+									<ScoreDistribution value="0" recordCount="1"/>
+									<ScoreDistribution value="1" recordCount="15"/>
+								</Node>
+							</Node>
+							<Node score="0" recordCount="258">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="17395.5"/>
+								<ScoreDistribution value="0" recordCount="196"/>
+								<ScoreDistribution value="1" recordCount="62"/>
+							</Node>
+							<Node score="0" recordCount="584">
+								<True/>
+								<ScoreDistribution value="0" recordCount="311"/>
+								<ScoreDistribution value="1" recordCount="273"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="176.9462661743164"/>
+							<Node score="1" recordCount="164">
+								<SimplePredicate field="double(complete-change)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="58"/>
+								<ScoreDistribution value="1" recordCount="106"/>
+							</Node>
+							<Node score="1" recordCount="15">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="15"/>
+							</Node>
+						</Node>
+						<Node score="0" recordCount="8">
+							<True/>
+							<ScoreDistribution value="0" recordCount="8"/>
+							<ScoreDistribution value="1" recordCount="0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="6">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(inactive-link)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4256.0"/>
+								<Node score="1" recordCount="92">
+									<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="8.936747550964355"/>
+									<ScoreDistribution value="0" recordCount="5"/>
+									<ScoreDistribution value="1" recordCount="87"/>
+								</Node>
+								<Node score="1" recordCount="44">
+									<True/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="44"/>
+								</Node>
+							</Node>
+							<Node score="0" recordCount="1005">
+								<SimplePredicate field="double(inactive-link)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="565"/>
+								<ScoreDistribution value="1" recordCount="440"/>
+							</Node>
+							<Node score="1" recordCount="2">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="2"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="8">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="8"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="7">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+						<MiningField name="double(code-format)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-format)" operator="lessOrEqual" value="0.5"/>
+							<Node score="1" recordCount="110">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3848.5"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="110"/>
+							</Node>
+							<Node score="0" recordCount="657">
+								<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="0.5046583414077759"/>
+								<ScoreDistribution value="0" recordCount="414"/>
+								<ScoreDistribution value="1" recordCount="243"/>
+							</Node>
+							<Node score="1" recordCount="206">
+								<True/>
+								<ScoreDistribution value="0" recordCount="85"/>
+								<ScoreDistribution value="1" recordCount="121"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+							<Node score="1" recordCount="13">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4450.0"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="13"/>
+							</Node>
+							<Node score="0" recordCount="162">
+								<True/>
+								<ScoreDistribution value="0" recordCount="89"/>
+								<ScoreDistribution value="1" recordCount="73"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="3">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="3"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="8">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<Node score="0" recordCount="899">
+									<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="0.13984383642673492"/>
+									<ScoreDistribution value="0" recordCount="508"/>
+									<ScoreDistribution value="1" recordCount="391"/>
+								</Node>
+								<Node score="1" recordCount="213">
+									<True/>
+									<ScoreDistribution value="0" recordCount="62"/>
+									<ScoreDistribution value="1" recordCount="151"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="32">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="32"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="7">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="7"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="9">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(emotion)"/>
+						<MiningField name="double(editTextDTO-format)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="0.14005602896213531"/>
+								<Node score="1" recordCount="26">
+									<SimplePredicate field="double(editTextDTO-format)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="2"/>
+									<ScoreDistribution value="1" recordCount="24"/>
+								</Node>
+								<Node score="1" recordCount="141">
+									<True/>
+									<ScoreDistribution value="0" recordCount="59"/>
+									<ScoreDistribution value="1" recordCount="82"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="124">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4256.0"/>
+								<ScoreDistribution value="0" recordCount="3"/>
+								<ScoreDistribution value="1" recordCount="121"/>
+							</Node>
+							<Node score="0" recordCount="756">
+								<True/>
+								<ScoreDistribution value="0" recordCount="443"/>
+								<ScoreDistribution value="1" recordCount="313"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="283941.5"/>
+							<Node score="0" recordCount="96">
+								<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="204.53268432617188"/>
+								<ScoreDistribution value="0" recordCount="72"/>
+								<ScoreDistribution value="1" recordCount="24"/>
+							</Node>
+							<Node score="1" recordCount="4">
+								<True/>
+								<ScoreDistribution value="0" recordCount="1"/>
+								<ScoreDistribution value="1" recordCount="3"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="4">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="4"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="10">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(emotion)"/>
+						<MiningField name="double(status)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.6093134880065918"/>
+								<Node score="0" recordCount="830">
+									<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="455"/>
+									<ScoreDistribution value="1" recordCount="375"/>
+								</Node>
+								<Node score="0" recordCount="72">
+									<True/>
+									<ScoreDistribution value="0" recordCount="50"/>
+									<ScoreDistribution value="1" recordCount="22"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="204">
+								<SimplePredicate field="double(status)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="60"/>
+								<ScoreDistribution value="1" recordCount="144"/>
+							</Node>
+							<Node score="0" recordCount="14">
+								<True/>
+								<ScoreDistribution value="0" recordCount="10"/>
+								<ScoreDistribution value="1" recordCount="4"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="31">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="31"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="11">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(complete-change)"/>
+						<MiningField name="double(code-change)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.732655942440033"/>
+							<Node>
+								<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="7.948586463928223"/>
+								<Node score="1" recordCount="19">
+									<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3852.0"/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="19"/>
+								</Node>
+								<Node score="0" recordCount="292">
+									<True/>
+									<ScoreDistribution value="0" recordCount="192"/>
+									<ScoreDistribution value="1" recordCount="100"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="534">
+								<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="94.95495986938477"/>
+								<ScoreDistribution value="0" recordCount="259"/>
+								<ScoreDistribution value="1" recordCount="275"/>
+							</Node>
+							<Node score="0" recordCount="89">
+								<True/>
+								<ScoreDistribution value="0" recordCount="58"/>
+								<ScoreDistribution value="1" recordCount="31"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="47.19550895690918"/>
+							<Node score="1" recordCount="163">
+								<SimplePredicate field="double(complete-change)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="48"/>
+								<ScoreDistribution value="1" recordCount="115"/>
+							</Node>
+							<Node score="1" recordCount="10">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="10"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="35">
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="107.65027236938477"/>
+							<ScoreDistribution value="0" recordCount="14"/>
+							<ScoreDistribution value="1" recordCount="21"/>
+						</Node>
+						<Node score="0" recordCount="9">
+							<True/>
+							<ScoreDistribution value="0" recordCount="9"/>
+							<ScoreDistribution value="1" recordCount="0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="12">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="ref-modification"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(gratitude)"/>
+						<MiningField name="double(code-format)"/>
+					</MiningSchema>
+					<LocalTransformations>
+						<DerivedField name="double(ref-modification)" optype="continuous" dataType="double">
+							<FieldRef field="ref-modification"/>
+						</DerivedField>
+					</LocalTransformations>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(ref-modification)" operator="lessOrEqual" value="0.5"/>
+								<Node score="0" recordCount="1064">
+									<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="551"/>
+									<ScoreDistribution value="1" recordCount="513"/>
+								</Node>
+								<Node score="1" recordCount="11">
+									<True/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="11"/>
+								</Node>
+							</Node>
+							<Node score="0" recordCount="37">
+								<SimplePredicate field="double(code-format)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="31"/>
+								<ScoreDistribution value="1" recordCount="6"/>
+							</Node>
+							<Node score="1" recordCount="5">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="5"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="34">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="34"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="13">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(status)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4440.0"/>
+							<Node>
+								<SimplePredicate field="double(status)" operator="lessOrEqual" value="0.5"/>
+								<Node score="1" recordCount="118">
+									<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="8.936747550964355"/>
+									<ScoreDistribution value="0" recordCount="7"/>
+									<ScoreDistribution value="1" recordCount="111"/>
+								</Node>
+								<Node score="1" recordCount="31">
+									<True/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="31"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="10">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="10"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+							<Node score="0" recordCount="951">
+								<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="579"/>
+								<ScoreDistribution value="1" recordCount="372"/>
+							</Node>
+							<Node score="1" recordCount="9">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="9"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="32">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="32"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="14">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(emotion)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(editTextDTO-format)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="102.83509063720703"/>
+							<Node>
+								<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="0.7606934309005737"/>
+								<Node score="1" recordCount="656">
+									<SimplePredicate field="double(editTextDTO-format)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="321"/>
+									<ScoreDistribution value="1" recordCount="335"/>
+								</Node>
+								<Node score="0" recordCount="208">
+									<True/>
+									<ScoreDistribution value="0" recordCount="138"/>
+									<ScoreDistribution value="1" recordCount="70"/>
+								</Node>
+							</Node>
+							<Node score="0" recordCount="29">
+								<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="-0.5"/>
+								<ScoreDistribution value="0" recordCount="16"/>
+								<ScoreDistribution value="1" recordCount="13"/>
+							</Node>
+							<Node score="1" recordCount="175">
+								<True/>
+								<ScoreDistribution value="0" recordCount="54"/>
+								<ScoreDistribution value="1" recordCount="121"/>
+							</Node>
+						</Node>
+						<Node score="0" recordCount="6">
+							<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="-0.5"/>
+							<ScoreDistribution value="0" recordCount="6"/>
+							<ScoreDistribution value="1" recordCount="0"/>
+						</Node>
+						<Node score="0" recordCount="55">
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="289.8265686035156"/>
+							<ScoreDistribution value="0" recordCount="48"/>
+							<ScoreDistribution value="1" recordCount="7"/>
+						</Node>
+						<Node score="1" recordCount="22">
+							<True/>
+							<ScoreDistribution value="0" recordCount="9"/>
+							<ScoreDistribution value="1" recordCount="13"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="15">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="greetings"/>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(status)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(editTextDTO-format)"/>
+					</MiningSchema>
+					<LocalTransformations>
+						<DerivedField name="double(greetings)" optype="continuous" dataType="double">
+							<FieldRef field="greetings"/>
+						</DerivedField>
+					</LocalTransformations>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="0.13984383642673492"/>
+							<Node>
+								<SimplePredicate field="double(editTextDTO-format)" operator="lessOrEqual" value="0.5"/>
+								<Node score="0" recordCount="705">
+									<SimplePredicate field="double(greetings)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="391"/>
+									<ScoreDistribution value="1" recordCount="314"/>
+								</Node>
+								<Node score="1" recordCount="2">
+									<True/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="2"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="22">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4440.0"/>
+								<ScoreDistribution value="0" recordCount="1"/>
+								<ScoreDistribution value="1" recordCount="21"/>
+							</Node>
+							<Node score="0" recordCount="202">
+								<True/>
+								<ScoreDistribution value="0" recordCount="148"/>
+								<ScoreDistribution value="1" recordCount="54"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(status)" operator="lessOrEqual" value="0.5"/>
+							<Node score="1" recordCount="36">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3819.5"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="36"/>
+							</Node>
+							<Node score="1" recordCount="164">
+								<True/>
+								<ScoreDistribution value="0" recordCount="59"/>
+								<ScoreDistribution value="1" recordCount="105"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="15">
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="94.77590942382812"/>
+							<ScoreDistribution value="0" recordCount="7"/>
+							<ScoreDistribution value="1" recordCount="8"/>
+						</Node>
+						<Node score="0" recordCount="5">
+							<True/>
+							<ScoreDistribution value="0" recordCount="5"/>
+							<ScoreDistribution value="1" recordCount="0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="16">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(emotion)"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(code-format)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4405.0"/>
+								<Node score="1" recordCount="118">
+									<SimplePredicate field="double(code-format)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="5"/>
+									<ScoreDistribution value="1" recordCount="113"/>
+								</Node>
+								<Node score="1" recordCount="26">
+									<True/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="26"/>
+								</Node>
+							</Node>
+							<Node score="0" recordCount="913">
+								<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="532"/>
+								<ScoreDistribution value="1" recordCount="381"/>
+							</Node>
+							<Node score="0" recordCount="86">
+								<True/>
+								<ScoreDistribution value="0" recordCount="63"/>
+								<ScoreDistribution value="1" recordCount="23"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="8">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="8"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="17">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(status)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+						<MiningField name="double(signature)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="0.13984383642673492"/>
+							<Node>
+								<SimplePredicate field="double(signature)" operator="lessOrEqual" value="0.5"/>
+								<Node score="0" recordCount="870">
+									<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="500"/>
+									<ScoreDistribution value="1" recordCount="370"/>
+								</Node>
+								<Node score="1" recordCount="33">
+									<True/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="33"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="9">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="9"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="85.77581787109375"/>
+							<Node score="1" recordCount="155">
+								<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="12.72830581665039"/>
+								<ScoreDistribution value="0" recordCount="42"/>
+								<ScoreDistribution value="1" recordCount="113"/>
+							</Node>
+							<Node score="1" recordCount="69">
+								<True/>
+								<ScoreDistribution value="0" recordCount="34"/>
+								<ScoreDistribution value="1" recordCount="35"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="14">
+							<SimplePredicate field="double(status)" operator="lessOrEqual" value="0.5"/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="14"/>
+						</Node>
+						<Node score="0" recordCount="1">
+							<True/>
+							<ScoreDistribution value="0" recordCount="1"/>
+							<ScoreDistribution value="1" recordCount="0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="18">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(signature)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(signature)" operator="lessOrEqual" value="0.5"/>
+							<Node score="1" recordCount="121">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3794.0"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="121"/>
+							</Node>
+							<Node score="0" recordCount="1017">
+								<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="584"/>
+								<ScoreDistribution value="1" recordCount="433"/>
+							</Node>
+							<Node score="1" recordCount="7">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="7"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="6">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="6"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="19">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(editTextDTO-format)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.6093134880065918"/>
+							<Node score="1" recordCount="104">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4375.5"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="104"/>
+							</Node>
+							<Node score="0" recordCount="402">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="27969.0"/>
+								<ScoreDistribution value="0" recordCount="291"/>
+								<ScoreDistribution value="1" recordCount="111"/>
+							</Node>
+							<Node score="0" recordCount="426">
+								<True/>
+								<ScoreDistribution value="0" recordCount="217"/>
+								<ScoreDistribution value="1" recordCount="209"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="109.74704360961914"/>
+							<Node score="1" recordCount="90">
+								<SimplePredicate field="double(editTextDTO-format)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="21"/>
+								<ScoreDistribution value="1" recordCount="69"/>
+							</Node>
+							<Node score="1" recordCount="114">
+								<True/>
+								<ScoreDistribution value="0" recordCount="44"/>
+								<ScoreDistribution value="1" recordCount="70"/>
+							</Node>
+						</Node>
+						<Node score="0" recordCount="6">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="13248.0"/>
+							<ScoreDistribution value="0" recordCount="3"/>
+							<ScoreDistribution value="1" recordCount="3"/>
+						</Node>
+						<Node score="0" recordCount="9">
+							<True/>
+							<ScoreDistribution value="0" recordCount="9"/>
+							<ScoreDistribution value="1" recordCount="0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="20">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(complete-change)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node score="1" recordCount="105">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3848.5"/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="105"/>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(complete-change)" operator="lessOrEqual" value="0.5"/>
+							<Node score="0" recordCount="961">
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="578"/>
+								<ScoreDistribution value="1" recordCount="383"/>
+							</Node>
+							<Node score="1" recordCount="30">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="30"/>
+							</Node>
+						</Node>
+						<Node score="0" recordCount="36">
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="27.40524673461914"/>
+							<ScoreDistribution value="0" recordCount="18"/>
+							<ScoreDistribution value="1" recordCount="18"/>
+						</Node>
+						<Node score="1" recordCount="19">
+							<True/>
+							<ScoreDistribution value="0" recordCount="1"/>
+							<ScoreDistribution value="1" recordCount="18"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="21">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(complete-change)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.732655942440033"/>
+							<Node>
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<Node score="1" recordCount="74">
+									<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3848.5"/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="74"/>
+								</Node>
+								<Node score="0" recordCount="824">
+									<True/>
+									<ScoreDistribution value="0" recordCount="514"/>
+									<ScoreDistribution value="1" recordCount="310"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="28">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="28"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(complete-change)" operator="lessOrEqual" value="0.5"/>
+							<Node score="1" recordCount="168">
+								<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="30.99663257598877"/>
+								<ScoreDistribution value="0" recordCount="45"/>
+								<ScoreDistribution value="1" recordCount="123"/>
+							</Node>
+							<Node score="0" recordCount="37">
+								<True/>
+								<ScoreDistribution value="0" recordCount="19"/>
+								<ScoreDistribution value="1" recordCount="18"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="9">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="9420.5"/>
+							<ScoreDistribution value="0" recordCount="1"/>
+							<ScoreDistribution value="1" recordCount="8"/>
+						</Node>
+						<Node score="1" recordCount="11">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="11"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="22">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="100.53763580322266"/>
+							<Node score="1" recordCount="112">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3808.0"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="112"/>
+							</Node>
+							<Node score="0" recordCount="919">
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="517"/>
+								<ScoreDistribution value="1" recordCount="402"/>
+							</Node>
+							<Node score="1" recordCount="19">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="19"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="9">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4210.0"/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="9"/>
+						</Node>
+						<Node score="0" recordCount="77">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="60197.5"/>
+							<ScoreDistribution value="0" recordCount="68"/>
+							<ScoreDistribution value="1" recordCount="9"/>
+						</Node>
+						<Node score="0" recordCount="15">
+							<True/>
+							<ScoreDistribution value="0" recordCount="9"/>
+							<ScoreDistribution value="1" recordCount="6"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="23">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(gratitude)"/>
+						<MiningField name="double(signature)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(signature)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<Node score="0" recordCount="1030">
+									<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="102.83509063720703"/>
+									<ScoreDistribution value="0" recordCount="533"/>
+									<ScoreDistribution value="1" recordCount="497"/>
+								</Node>
+								<Node score="0" recordCount="72">
+									<True/>
+									<ScoreDistribution value="0" recordCount="55"/>
+									<ScoreDistribution value="1" recordCount="17"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="35">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="35"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="14">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="14"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="24">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(emotion)"/>
+						<MiningField name="double(duplication)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="100.53763580322266"/>
+							<Node>
+								<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+								<Node score="1" recordCount="127">
+									<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3848.5"/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="127"/>
+								</Node>
+								<Node score="0" recordCount="926">
+									<True/>
+									<ScoreDistribution value="0" recordCount="504"/>
+									<ScoreDistribution value="1" recordCount="422"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="6">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="6"/>
+							</Node>
+						</Node>
+						<Node score="0" recordCount="3">
+							<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="-0.5"/>
+							<ScoreDistribution value="0" recordCount="3"/>
+							<ScoreDistribution value="1" recordCount="0"/>
+						</Node>
+						<Node score="1" recordCount="3">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4210.0"/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="3"/>
+						</Node>
+						<Node score="0" recordCount="86">
+							<True/>
+							<ScoreDistribution value="0" recordCount="61"/>
+							<ScoreDistribution value="1" recordCount="25"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="25">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(editTextDTO-change)"/>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(complete-change)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-change)" operator="lessOrEqual" value="0.14005602896213531"/>
+							<Node score="1" recordCount="30">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3870.5"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="30"/>
+							</Node>
+							<Node score="0" recordCount="45">
+								<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.732655942440033"/>
+								<ScoreDistribution value="0" recordCount="26"/>
+								<ScoreDistribution value="1" recordCount="19"/>
+							</Node>
+							<Node score="1" recordCount="112">
+								<True/>
+								<ScoreDistribution value="0" recordCount="38"/>
+								<ScoreDistribution value="1" recordCount="74"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+							<Node score="0" recordCount="888">
+								<SimplePredicate field="double(complete-change)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="502"/>
+								<ScoreDistribution value="1" recordCount="386"/>
+							</Node>
+							<Node score="1" recordCount="42">
+								<True/>
+								<ScoreDistribution value="0" recordCount="14"/>
+								<ScoreDistribution value="1" recordCount="28"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="34">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="34"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="26">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.732655942440033"/>
+							<Node score="1" recordCount="86">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3780.0"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="86"/>
+							</Node>
+							<Node score="0" recordCount="825">
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<ScoreDistribution value="0" recordCount="503"/>
+								<ScoreDistribution value="1" recordCount="322"/>
+							</Node>
+							<Node score="1" recordCount="37">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="37"/>
+							</Node>
+						</Node>
+						<Node>
+							<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="158.8642807006836"/>
+							<Node score="1" recordCount="34">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3762.0"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="34"/>
+							</Node>
+							<Node score="1" recordCount="164">
+								<True/>
+								<ScoreDistribution value="0" recordCount="54"/>
+								<ScoreDistribution value="1" recordCount="110"/>
+							</Node>
+						</Node>
+						<Node score="0" recordCount="5">
+							<True/>
+							<ScoreDistribution value="0" recordCount="5"/>
+							<ScoreDistribution value="1" recordCount="0"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="27">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(emotion)"/>
+						<MiningField name="double(code-change)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(emotion)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(code-change)" operator="lessOrEqual" value="1.732655942440033"/>
+								<Node score="0" recordCount="832">
+									<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="478"/>
+									<ScoreDistribution value="1" recordCount="354"/>
+								</Node>
+								<Node score="1" recordCount="17">
+									<True/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="17"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="44">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4034.5"/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="44"/>
+							</Node>
+							<Node score="1" recordCount="165">
+								<True/>
+								<ScoreDistribution value="0" recordCount="61"/>
+								<ScoreDistribution value="1" recordCount="104"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="4">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3805.5"/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="4"/>
+						</Node>
+						<Node score="0" recordCount="56">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="30064.0"/>
+							<ScoreDistribution value="0" recordCount="46"/>
+							<ScoreDistribution value="1" recordCount="10"/>
+						</Node>
+						<Node score="0" recordCount="33">
+							<True/>
+							<ScoreDistribution value="0" recordCount="18"/>
+							<ScoreDistribution value="1" recordCount="15"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="28">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(gratitude)"/>
+						<MiningField name="double(signature)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<Node score="0" recordCount="1097">
+									<SimplePredicate field="double(signature)" operator="lessOrEqual" value="0.5"/>
+									<ScoreDistribution value="0" recordCount="592"/>
+									<ScoreDistribution value="1" recordCount="505"/>
+								</Node>
+								<Node score="1" recordCount="12">
+									<True/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="12"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="31">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="31"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="11">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="11"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="29">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(editTextDTO-format)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(editTextDTO-format)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4256.0"/>
+								<Node score="1" recordCount="103">
+									<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3848.5"/>
+									<ScoreDistribution value="0" recordCount="0"/>
+									<ScoreDistribution value="1" recordCount="103"/>
+								</Node>
+								<Node score="1" recordCount="31">
+									<True/>
+									<ScoreDistribution value="0" recordCount="5"/>
+									<ScoreDistribution value="1" recordCount="26"/>
+								</Node>
+							</Node>
+							<Node score="0" recordCount="716">
+								<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="356516.5"/>
+								<ScoreDistribution value="0" recordCount="401"/>
+								<ScoreDistribution value="1" recordCount="315"/>
+							</Node>
+							<Node score="1" recordCount="13">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="13"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="25">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="3808.0"/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="25"/>
+						</Node>
+						<Node score="0" recordCount="126">
+							<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="27800.0"/>
+							<ScoreDistribution value="0" recordCount="94"/>
+							<ScoreDistribution value="1" recordCount="32"/>
+						</Node>
+						<Node score="0" recordCount="137">
+							<True/>
+							<ScoreDistribution value="0" recordCount="72"/>
+							<ScoreDistribution value="1" recordCount="65"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+			<Segment id="30">
+				<True/>
+				<TreeModel functionName="classification" missingValueStrategy="nullPrediction">
+					<MiningSchema>
+						<MiningField name="double(reputation)"/>
+						<MiningField name="double(duplication)"/>
+						<MiningField name="double(gratitude)"/>
+					</MiningSchema>
+					<Node>
+						<True/>
+						<Node>
+							<SimplePredicate field="double(duplication)" operator="lessOrEqual" value="0.5"/>
+							<Node>
+								<SimplePredicate field="double(gratitude)" operator="lessOrEqual" value="0.5"/>
+								<Node score="1" recordCount="133">
+									<SimplePredicate field="double(reputation)" operator="lessOrEqual" value="4256.0"/>
+									<ScoreDistribution value="0" recordCount="3"/>
+									<ScoreDistribution value="1" recordCount="130"/>
+								</Node>
+								<Node score="0" recordCount="976">
+									<True/>
+									<ScoreDistribution value="0" recordCount="575"/>
+									<ScoreDistribution value="1" recordCount="401"/>
+								</Node>
+							</Node>
+							<Node score="1" recordCount="36">
+								<True/>
+								<ScoreDistribution value="0" recordCount="0"/>
+								<ScoreDistribution value="1" recordCount="36"/>
+							</Node>
+						</Node>
+						<Node score="1" recordCount="6">
+							<True/>
+							<ScoreDistribution value="0" recordCount="0"/>
+							<ScoreDistribution value="1" recordCount="6"/>
+						</Node>
+					</Node>
+				</TreeModel>
+			</Segment>
+		</Segmentation>
+	</MiningModel>
+</PMML>

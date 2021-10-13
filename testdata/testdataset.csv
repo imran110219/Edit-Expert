@@ -1,0 +1,303 @@
+postId,guiId,revisionNo,editStatus,preEditText,postEditText,rollbackUserId,rollbackUserName,rollbackDateTime,prevEditUserId,prevEditUserName,prevEditDateTime
+18,5f06d7f5-01c3-485e-8d10-32b6a2f870ea,2,edited,"<div class=""s-prose js-post-body""> 
+ <p> For a table like this:</p> 
+ <pre><code>CREATE TABLE binary_data (
+id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+description CHAR(50),
+bin_data LONGBLOB,
+filename CHAR(50),
+filesize CHAR(50),
+filetype CHAR(50)
+);
+</code></pre> 
+ <p> Here is a PHP example:</p> 
+ <pre><code>&lt;?php
+
+// store.php3 - by Florian Dittmer &lt;dittmer@gmx.net&gt;
+// Example php script to demonstrate the storing of binary files into
+// an sql database. More information can be found at http://www.phpbuilder.com/
+?&gt;
+
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Store binary data into SQL Database&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+
+&lt;?php
+// code that will be executed if the form has been submitted:
+
+if ($submit) {
+
+    // connect to the database
+    // (you may have to adjust the hostname,username or password)
+
+    MYSQL_CONNECT(""localhost"",""root"",""password"");
+    mysql_select_db(""binary_data"");
+
+    $data = <span class=""diff-delete"">addslashes</span>(fread(fopen($form_data, ""r""), filesize($form_data)));
+
+    $result=MYSQL_QUERY(""INSERT INTO binary_data (description,bin_data,filename,filesize,filetype) "".
+        ""VALUES ('$form_description','$data','$form_data_name','$form_data_size','$form_data_type')"");
+
+    $id= mysql_insert_id();
+    print ""&lt;p&gt;This file has the following Database ID: &lt;b&gt;$id&lt;/b&gt;"";
+
+    MYSQL_CLOSE();
+
+} else {
+
+    // else show the form to submit new data:
+?&gt;
+
+    &lt;form method=""post"" action=""&lt;?php echo $PHP_SELF; ?&gt;"" enctype=""multipart/form-data""&gt;
+    File Description:&lt;br&gt;
+    &lt;input type=""editTextDTO"" name=""form_description""  size=""40""&gt;
+    &lt;input type=""hidden"" name=""MAX_FILE_SIZE"" value=""1000000""&gt;
+    &lt;br&gt;File to upload/store in database:&lt;br&gt;
+    &lt;input type=""file"" name=""form_data""  size=""40""&gt;
+    &lt;p&gt;&lt;input type=""submit"" name=""submit"" value=""submit""&gt;
+    &lt;/form&gt;
+
+&lt;?php
+
+}
+
+?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p> For a table like this:</p> 
+ <pre><code>CREATE TABLE binary_data (
+id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+description CHAR(50),
+bin_data LONGBLOB,
+filename CHAR(50),
+filesize CHAR(50),
+filetype CHAR(50)
+);
+</code></pre> 
+ <p> Here is a PHP example:</p> 
+ <pre><code>&lt;?php
+
+// store.php3 - by Florian Dittmer &lt;dittmer@gmx.net&gt;
+// Example php script to demonstrate the storing of binary files into
+// an sql database. More information can be found at http://www.phpbuilder.com/
+?&gt;
+
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Store binary data into SQL Database&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+
+&lt;?php
+// code that will be executed if the form has been submitted:
+
+if ($submit) {
+
+    // connect to the database
+    // (you may have to adjust the hostname,username or password)
+
+    MYSQL_CONNECT(""localhost"",""root"",""password"");
+    mysql_select_db(""binary_data"");
+
+    $data = <span class=""diff-add"">mysql_real_escape_string</span>(fread(fopen($form_data, ""r""), filesize($form_data)));
+
+    $result=MYSQL_QUERY(""INSERT INTO binary_data (description,bin_data,filename,filesize,filetype) "".
+        ""VALUES ('$form_description','$data','$form_data_name','$form_data_size','$form_data_type')"");
+
+    $id= mysql_insert_id();
+    print ""&lt;p&gt;This file has the following Database ID: &lt;b&gt;$id&lt;/b&gt;"";
+
+    MYSQL_CLOSE();
+
+} else {
+
+    // else show the form to submit new data:
+?&gt;
+
+    &lt;form method=""post"" action=""&lt;?php echo $PHP_SELF; ?&gt;"" enctype=""multipart/form-data""&gt;
+    File Description:&lt;br&gt;
+    &lt;input type=""editTextDTO"" name=""form_description""  size=""40""&gt;
+    &lt;input type=""hidden"" name=""MAX_FILE_SIZE"" value=""1000000""&gt;
+    &lt;br&gt;File to upload/store in database:&lt;br&gt;
+    &lt;input type=""file"" name=""form_data""  size=""40""&gt;
+    &lt;p&gt;&lt;input type=""submit"" name=""submit"" value=""submit""&gt;
+    &lt;/form&gt;
+
+&lt;?php
+
+}
+
+?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre> 
+</div>",6068,pupeno,2009-05-28 11:40,inactive,phpguy,2008-08-01 5:12
+27,222dcb1a-c413-46db-b047-681ce771c47c,2,edited,"<div class=""s-prose js-post-body""> 
+ <p> This is the method I am currently using on one of my websites. This only returns a relative day, hour, time. And then the user has to slap on ""ago"" in the output.</p> 
+ <pre><code>public static string ToLongString(this TimeSpan time)
+{
+    string output = String.Empty;
+
+    if (time.Days &gt; 0)
+        output += time.Days + "" days "";
+
+    if ((time.Days == 0 || time.Days == 1) &amp;&amp; time.Hours &gt; 0)
+        output += time.Hours + "" hr "";
+
+    if (time.Days == 0 &amp;&amp; time.Minutes &gt; 0)
+        output += time.Minutes + "" min "";
+
+    if (output.Length == 0)
+        output += time.Seconds + "" sec"";
+
+    return output.Trim();
+}
+</code></pre> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p><span class=""diff-add""> @jeff</span></p> 
+ <span class=""diff-add""> </span> 
+ <p><span class=""diff-add""> IMHO yours seems a little long. However it does seem a little more robust with support for ""yesterday"" and ""years"". But in my experience when this is used the person is most likely to view the content in the first 30 days. It is only the really hardcore people that come after that. So that is why I usually elect to keep this short and simple.</span></p> 
+ <span class=""diff-add""> </span> 
+ <p> This is the method I am currently using on one of my websites. This only returns a relative day, hour, time. And then the user has to slap on ""ago"" in the output.</p> 
+ <pre><code>public static string ToLongString(this TimeSpan time)
+{
+    string output = String.Empty;
+
+    if (time.Days &gt; 0)
+        output += time.Days + "" days "";
+
+    if ((time.Days == 0 || time.Days == 1) &amp;&amp; time.Hours &gt; 0)
+        output += time.Hours + "" hr "";
+
+    if (time.Days == 0 &amp;&amp; time.Minutes &gt; 0)
+        output += time.Minutes + "" min "";
+
+    if (output.Length == 0)
+        output += time.Seconds + "" sec"";
+
+    return output.Trim();
+}
+</code></pre> 
+</div>",17,Nick Berardi,2008-08-01 13:16,17,Nick Berardi,2008-08-01 12:17
+31,9cc8c61a-3d3c-42ea-9322-5231283053e4,3,edited,"<div class=""s-prose js-post-body""> 
+ <p> <span class=""diff-delete"">Does the</span> parent <code>div</code> have a defined <code>width</code> either <span class=""diff-delete"">pixel</span> or percentage<span class=""diff-delete"">? Not 100% sure but I think in IE7</span>, the parent <code>div</code> needs a defined <code>width</code> for child percentage <code>div</code>s to work correctly.</p> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p> <span class=""diff-add"">The</span> parent <code>div</code><span class=""diff-add""> needs to</span> have a defined <code>width</code><span class=""diff-add"">,</span> either <span class=""diff-add"">in pixels</span> or<span class=""diff-add""> as a</span> percentage<span class=""diff-add"">. In Internet�&nbsp;Explorer�&nbsp;7</span>, the parent <code>div</code> needs a defined <code>width</code> for child percentage <code>div</code>s to work correctly.</p> 
+</div>",63550,Peter Mortensen,2016-03-19 6:10,842480,Wirone,2012-06-04 23:35
+39,0196041b-ac99-43d5-b23c-f83d50258dab,3,edited,"<div class=""s-prose js-post-body""> 
+ <p> I am aware in <span class=""diff-delete"">dot net</span> there are three timer types (see <a href=""http://msdn.microsoft.com/en-us/magazine/cc164015.aspx"" rel=""nofollow noreferrer"">http://msdn.microsoft.com/en-us/magazine/cc164015.aspx</a>). I have chosen a the threaded timer as the other types can drift if the main thread is busy and I need this to be reliable.</p> 
+ <p> The way this timer works in the control of the timer is put on another thread so it can always tick along with the work begin completed on the parent thread when it is not busy.</p> 
+ <p> The issue I have is that with this timer in a console application is that while the timer is ticking along on another thread the main thread is not doing anything so the app closes.</p> 
+ <p> I tried adding a while true loop but then the main thread is too busy when the timer does go off.</p> 
+ <p> Any ideas welcome.</p> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p> I am aware in <span class=""diff-add"">.net</span> there are three timer types (see <a href=""http://msdn.microsoft.com/en-us/magazine/cc164015.aspx"" rel=""nofollow noreferrer"">http://msdn.microsoft.com/en-us/magazine/cc164015.aspx</a>). I have chosen a the threaded timer as the other types can drift if the main thread is busy and I need this to be reliable.</p> 
+ <p> The way this timer works in the control of the timer is put on another thread so it can always tick along with the work begin completed on the parent thread when it is not busy.</p> 
+ <p> The issue I have is that with this timer in a console application is that while the timer is ticking along on another thread the main thread is not doing anything so the app closes.</p> 
+ <p> I tried adding a while true loop but then the main thread is too busy when the timer does go off.</p> 
+ <p> Any ideas welcome.</p> 
+</div>",33,John,2011-11-01 8:56,42439,Jim Anderson,2008-12-26 17:57
+44,8125e9c7-4374-47d8-aaef-06f77420cc2f,4,edited,"<div class=""s-prose js-post-body""> 
+ <p> Consider using a <a href=""https://docs.microsoft.com/en-us/dotnet/api/system.threading.manualresetevent"" rel=""nofollow noreferrer"">ManualResetEvent</a> to block the main thread at the end of its processing, and call <code>Reset()</code> on it once the timer's processing has finished. If this is something that needs to run <span class=""diff-delete"">constantly</span>, consider moving this into a service process instead of a console app.</p> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p> Consider using a <a href=""https://docs.microsoft.com/en-us/dotnet/api/system.threading.manualresetevent"" rel=""nofollow noreferrer"">ManualResetEvent</a> to block the main thread at the end of its processing, and call <code>Reset()</code> on it once the timer's processing has finished. If this is something that needs to run <span class=""diff-add"">continuously</span>, consider moving this into a service process instead of a console app.</p> 
+</div>",806202,Arsen Khachaturyan,2019-12-24 11:07,5407188,Kolappan N,2019-12-24 11:07
+45,cc489583-6805-42cc-b1b2-2c9421f4c25c,2,edited,"<div class=""s-prose js-post-body""> 
+ <p> You can use something like Console.<span class=""diff-delete"">WriteLine</span>() to block the main thread, so other background threads (like timer threads) will still work. You may also use an <a href=""http://msdn.microsoft.com/en-us/library/system.threading.autoresetevent.aspx"" rel=""nofollow noreferrer"">AutoResetEvent</a> to block the execution, then (when you need to) you can call Set() method on that AutoResetEvent object to release the main thread. Also ensure that your reference to Timer object doesn't go out of scope and garbage collected.</p> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p> You can use something like Console.<span class=""diff-add"">ReadLine</span>() to block the main thread, so other background threads (like timer threads) will still work. You may also use an <a href=""http://msdn.microsoft.com/en-us/library/system.threading.autoresetevent.aspx"" rel=""nofollow noreferrer"">AutoResetEvent</a> to block the execution, then (when you need to) you can call Set() method on that AutoResetEvent object to release the main thread. Also ensure that your reference to Timer object doesn't go out of scope and garbage collected.</p> 
+</div>",39,huseyint,2009-03-23 21:15,39,huseyint,2008-08-01 12:56
+48,7c98f828-ce55-4af7-a20c-943767e08086,12,edited,"<div class=""s-prose js-post-body""> 
+ <p> Let's say you create a <span class=""diff-delete"">Wizard</span> in an HTML form. One button goes back, and one goes forward. <span class=""diff-delete""> Since</span> the <em>back</em> button appears first in the markup when you press <span class=""diff-delete"">Enter</span> it will use that button to submit the form.</p> 
+ <p> Example:</p> 
+ <p></p> 
+ <div class=""snippet"" data-lang=""js"" data-hide=""false"" data-console=""true"" data-babel=""false""> 
+  <div class=""snippet-code""> 
+   <pre class=""snippet-code-html lang-html prettyprint-override""><code>&lt;form&gt;
+  &lt;!-- <span class=""diff-delete"">put</span> your cursor in this field and press Enter --&gt;
+  &lt;input type=""editTextDTO"" name=""field1"" /&gt;
+
+  &lt;!-- This is the button that will submit --&gt;
+  &lt;input type=""submit"" name=""prev"" value=""Previous Page"" /&gt;
+
+  &lt;!-- But this is the button that I WANT to submit --&gt;
+  &lt;input type=""submit"" name=""next"" value=""Next Page"" /&gt;
+&lt;/form&gt;</code></pre> 
+  </div> 
+ </div> 
+ <p></p> 
+ <p><span class=""diff-delete""> What</span> I would like to<span class=""diff-delete""> do, is</span> get to decide which button is used to submit the form when a user presses <span class=""diff-delete"">Enter</span>. That way, when you press <span class=""diff-delete"">Enter</span> the <span class=""diff-delete"">Wizard</span> will move to the next page, not the previous. Do you have to use <code>tabindex</code> to do this?</p> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p> Let's say you create a <span class=""diff-add"">wizard</span> in an HTML form. One button goes back, and one goes forward. <span class=""diff-add"">Since</span> the <em>back</em> button appears first in the markup when you press <kbd><span class=""diff-add"">Enter</span></kbd><span class=""diff-add"">,</span> it will use that button to submit the form.</p> 
+ <p> Example:</p> 
+ <p></p> 
+ <div class=""snippet"" data-lang=""js"" data-hide=""false"" data-console=""true"" data-babel=""false""> 
+  <div class=""snippet-code""> 
+   <pre class=""snippet-code-html lang-html prettyprint-override""><code>&lt;form&gt;
+  &lt;!-- <span class=""diff-add"">Put</span> your cursor in this field and press Enter --&gt;
+  &lt;input type=""editTextDTO"" name=""field1"" /&gt;
+
+  &lt;!-- This is the button that will submit --&gt;
+  &lt;input type=""submit"" name=""prev"" value=""Previous Page"" /&gt;
+
+  &lt;!-- But this is the button that I WANT to submit --&gt;
+  &lt;input type=""submit"" name=""next"" value=""Next Page"" /&gt;
+&lt;/form&gt;</code></pre> 
+  </div> 
+ </div> 
+ <p></p> 
+ <p> I would like to get to decide which button is used to submit the form when a user presses <kbd><span class=""diff-add"">Enter</span></kbd>. That way, when you press <kbd><span class=""diff-add"">Enter</span></kbd> the <span class=""diff-add"">wizard</span> will move to the next page, not the previous. Do you have to use <code>tabindex</code> to do this?</p> 
+</div>",63550,Peter Mortensen,2019-07-14 14:18,2246271,Sasha,2017-04-12 17:19
+51,c40dbd95-a1e5-4f82-9bfb-0c1b2e0e0709,2,edited,"<div class=""s-prose js-post-body""> 
+ <p> Why don't you want to use triggers<span class=""diff-delete"">.</span> They are a good thing if you use them correctly. If you use them as a way to enforce referential integrity that is when they go from good to bad. But if you use them for monitoring, they are not really considered taboo.</p> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p> Why don't you want to use triggers<span class=""diff-add"">?</span> They are a good thing if you use them correctly. If you use them as a way to enforce referential integrity that is when they go from good to bad. But if you use them for monitoring, they are not really considered taboo.</p> 
+</div>",3735690,Esperento57,2017-01-26 17:38,17,Nick Berardi,2008-08-01 13:07
+53,f757be2e-d785-4a19-9c06-c2a5b7b4f0be,2,edited,"<div class=""s-prose js-post-body""> 
+ <p>(I'm not positive about this, but...)</p> 
+ <p> AS3 uses a non-deterministic garbage collection. Which means that unreferenced memory will be freed up whenever the runtime feels like it (typically not unless there's a reason to run, since it's an expensive operation to execute). This is the same approach used by most modern garbage collected languages (like C# and Java as well).</p> 
+ <p> Assuming there are no other references to the memory pointed to by byteArray or the items within the array itself, the memory will be freed at some point after you exit the scope where byteArray is declared.</p> 
+ <p> You can force a garbage collection, though you really shouldn't. If you do, do it only for testing...if you do it in production, you'll hurt performance much more than help me.</p> 
+ <p> To force a GC, try (yes, twice):<span class=""diff-delete""> flash.system.System.gc(); flash.system.System.gc();</span></p> 
+ <p> You can read more at: <a href=""http://www.craftymind.com/2008/04/09/kick-starting-the-garbage-collector-in-actionscript-3-with-air/"" rel=""nofollow noreferrer"">http://www.craftymind.com/2008/04/09/kick-starting-the-garbage-collector-in-actionscript-3-with-air/</a></p> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p>(I'm not positive about this, but...)</p> 
+ <p> AS3 uses a non-deterministic garbage collection. Which means that unreferenced memory will be freed up whenever the runtime feels like it (typically not unless there's a reason to run, since it's an expensive operation to execute). This is the same approach used by most modern garbage collected languages (like C# and Java as well).</p> 
+ <p> Assuming there are no other references to the memory pointed to by byteArray or the items within the array itself, the memory will be freed at some point after you exit the scope where byteArray is declared.</p> 
+ <p> You can force a garbage collection, though you really shouldn't. If you do, do it only for testing...if you do it in production, you'll hurt performance much more than help me.</p> 
+ <p> To force a GC, try (yes, twice):</p> 
+ <span class=""diff-add""> </span> 
+ <pre><code><span class=""diff-add"">flash.system.System.gc();
+flash.system.System.gc();
+</span></code></pre> 
+ <p> You can read more at: <a href=""http://www.craftymind.com/2008/04/09/kick-starting-the-garbage-collector-in-actionscript-3-with-air/"" rel=""nofollow noreferrer"">http://www.craftymind.com/2008/04/09/kick-starting-the-garbage-collector-in-actionscript-3-with-air/</a></p> 
+</div>",967315,Paul Fleming,2012-10-14 12:17,34,Karl Seguin,2008-08-01 13:08
+56,629c20c6-d456-448b-8fae-86b5b27f1cb3,4,edited,"<div class=""s-prose js-post-body""> 
+ <p> Give your submit buttons same name like this:</p> 
+ <pre><code>&lt;input type=""submit"" name=""submitButton"" value=""Previous Page"" /&gt;
+&lt;input type=""submit"" name=""submitButton"" value=""Next Page"" /&gt;
+</code></pre> 
+ <p> When the user presses <span class=""diff-delete"">enter</span> and the <em><span class=""diff-delete"">Request</span></em> goes to server, you can check the value for <code>submitButton</code> on your server-side code which contains a collection of form <code>name/value</code> pairs. For example in <span class=""diff-delete"">classic ASP</span>:</p> 
+ <pre class=""lang-vb prettyprint-override""><code>If Request.Form(""submitButton"") = ""Previous Page"" Then
+    ' Code for <span class=""diff-delete"">Previous</span> <span class=""diff-delete"">Page</span>
+ElseIf Request.Form(""submitButton"") = ""Next Page"" Then
+    ' Code for <span class=""diff-delete"">Next</span> <span class=""diff-delete"">Page</span>
+End If
+</code></pre> 
+ <p> Reference: <a href=""http://www.chami.com/tips/internet/042599I.html"" rel=""nofollow noreferrer""><span class=""diff-delete"">Using multiple submit buttons on a single form</span></a></p> 
+</div>","<div class=""s-prose js-post-body""> 
+ <p> Give your submit buttons<span class=""diff-add""> the</span> same name like this:</p> 
+ <pre><code>&lt;input type=""submit"" name=""submitButton"" value=""Previous Page"" /&gt;
+&lt;input type=""submit"" name=""submitButton"" value=""Next Page"" /&gt;
+</code></pre> 
+ <p> When the user presses <kbd><span class=""diff-add"">Enter</span></kbd> and the <em><span class=""diff-add"">request</span></em> goes to<span class=""diff-add""> the</span> server, you can check the value for <code>submitButton</code> on your server-side code which contains a collection of form <code>name/value</code> pairs. For example<span class=""diff-add"">,</span> in <a href=""http://en.wikipedia.org/wiki/Active_Server_Pages"" rel=""nofollow noreferrer""><span class=""diff-add"">ASP Classic</span></a>:</p> 
+ <pre class=""lang-vb prettyprint-override""><code>If Request.Form(""submitButton"") = ""Previous Page"" Then
+    ' Code for <span class=""diff-add"">the</span> <span class=""diff-add"">previous page</span>
+ElseIf Request.Form(""submitButton"") = ""Next Page"" Then
+    ' Code for <span class=""diff-add"">the</span> <span class=""diff-add"">next page</span>
+End If
+</code></pre> 
+ <p> Reference: <em><a href=""http://www.chami.com/tips/internet/042599I.html"" rel=""nofollow noreferrer""><span class=""diff-add"">Using multiple submit buttons on a single form</span></a></em></p> 
+</div>",63550,Peter Mortensen,2019-07-14 14:26,2354564,Sid M,2014-07-14 7:55
