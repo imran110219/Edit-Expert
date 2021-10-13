@@ -61,7 +61,7 @@
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-editTextDTO -->
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-Text</artifactId>
+            <artifactId>commons-text</artifactId>
             <version>1.6</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.pmml4s/pmml4s -->
