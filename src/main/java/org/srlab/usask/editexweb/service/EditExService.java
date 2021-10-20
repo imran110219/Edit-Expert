@@ -166,7 +166,7 @@ public class EditExService {
         feature.put("ref-modification", referenceModification);
         feature.put("deface-post", defacePost);
         feature.put("complete-change", completeChange);
-        feature.put("reputation", editTextDTO.getReputation());
+        feature.put("reputation", Integer.parseInt(editTextDTO.getReputation()));
         feature.put("emotion", 0);
 
         Map<String, Object> results = model.predict(feature);

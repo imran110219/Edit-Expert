@@ -14,5 +14,5 @@ public class EditTextDTO {
     private String rollbackUserName;
     private String userID;
     private String rejectedEditUserName;
-    private int reputation;
+    private String reputation;
 }
