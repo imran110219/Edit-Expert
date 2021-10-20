@@ -12,4 +12,5 @@ public class ResultDTO {
     private double acceptProbability;
     private double rejectProbability;
     private String permission;
+    private String reason;
 }

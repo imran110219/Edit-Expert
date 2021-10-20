@@ -174,17 +174,20 @@ public class EditExService {
         rejected = (double) results.get("probability(1)");
         accepted = (double) results.get("probability(0)");
 
-        ResultDTO featureDTO = new ResultDTO();
-        featureDTO.setAcceptProbability(accepted);
-        featureDTO.setRejectProbability(rejected);
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setAcceptProbability(accepted);
+        resultDTO.setRejectProbability(rejected);
 
         if (rejected >= accepted) {
             System.out.println("Rejected with probability:" + rejected);
-            featureDTO.setPermission("rejected");
+            resultDTO.setPermission("rejected");
+            resultDTO.setReason("Rejected Reason");
         } else {
             System.out.println("Accepted with probability:" + accepted);
-            featureDTO.setPermission("accepted");
+            resultDTO.setPermission("accepted");
+            resultDTO.setReason("Accepted Reason");
         }
-        return featureDTO;
+
+        return resultDTO;
     }
 }
