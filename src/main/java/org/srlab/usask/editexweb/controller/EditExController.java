@@ -11,6 +11,7 @@ import org.srlab.usask.editexweb.service.EditExService;
  * @author Sadman
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1")
 public class EditExController {
 
