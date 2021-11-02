@@ -1,5 +1,14 @@
 package org.srlab.usask.editex.predictors;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -7,13 +16,10 @@ import org.pmml4s.model.Model;
 import org.supercsv.cellprocessor.Optional;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvListReader;
+import org.supercsv.io.CsvListWriter;
 import org.supercsv.io.ICsvListReader;
+import org.supercsv.io.ICsvListWriter;
 import org.supercsv.prefs.CsvPreference;
-
-import java.io.FileReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class AttributeDetectionMain {
@@ -37,7 +43,8 @@ public class AttributeDetectionMain {
 			List<Object> editList;
 			
 			Model model = Model.fromFile("./model/model.pmml");
-			
+			Parser parser = Parser.builder().build();
+						
 			while((editList = editReader.read(processors)) != null) {
 				
 				String postId = "";
@@ -77,6 +84,12 @@ public class AttributeDetectionMain {
 				int completeChange=0;
 				
 				int reputation=0;
+				
+				Node preTextDocument = null;
+				Node postTextDocument = null;
+				
+				String suggestion = "";
+				int numberOfReason=0;
 
 				
 				try {
@@ -87,19 +100,36 @@ public class AttributeDetectionMain {
 				}
 				
 				try {
-					preEditDoc = Jsoup.parse(editList.get(4).toString());					
+					preEditDoc = Jsoup.parse(editList.get(4).toString());
+					
+					//Parse markup to HTML
+					preTextDocument = parser.parse(preEditDoc.toString());
+					HtmlRenderer renderer = HtmlRenderer.builder().build();
+					renderer.render(preTextDocument);  // "<p>This is <em>Sparta</em></p>\n"
+					preEditDoc = Jsoup.parse(renderer.render(preTextDocument));
+//					System.out.println(preEditDoc);
+					
 	    			preText = preEditDoc.select("p");	    			
 					preEditText = preText.text().toString();
 
             		preCode = preEditDoc.select("pre");
             		preEditCode = preCode.text();
-            							
+					System.out.println(preEditCode);
+            		            							
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
 				try {
 					postEditDoc = Jsoup.parse(editList.get(5).toString());
+					
+					//Parse markup to HTML 
+					postTextDocument = parser.parse(postEditDoc.toString());
+					HtmlRenderer renderer = HtmlRenderer.builder().build();
+					renderer.render(postTextDocument);  // "<p>This is <em>Sparta</em></p>\n"
+					postEditDoc = Jsoup.parse(renderer.render(postTextDocument));
+//					System.out.println(preEditDoc);
+					
 	    			postText = postEditDoc.select("p");
 					postEditText = postText.text().toString();
 					
@@ -175,10 +205,10 @@ public class AttributeDetectionMain {
 				status = StatusDetection.detectStatus(preEditText.toLowerCase(), postEditText.toLowerCase());
 				deprecation = DeprecationDetecton.detectDeprecation(preEditText.toLowerCase(), postEditText.toLowerCase());
 				duplication = DuplicationDetection.detectDeprecation(preEditText.toLowerCase(), postEditText.toLowerCase());
-				signature = SignatureDetection.detectSignature(preEditText, postEditText, rollbackUserName, rejectedEditUserName);
+				signature = SignatureDetection.detectSignature(postEditText.toLowerCase(), rollbackUserName.toLowerCase());
 				
 				inactiveLink = EditHyperLink.detectInactiveHyperlink(preEditText, postEditText);
-				referenceModification= EditHyperLink.detectHyperLinkModification(preEditText, postEditText);
+				referenceModification=EditHyperLink.detectHyperLinkModification(preEditText, postEditText);
 
 				if((preEditText==null && preEditCode==null) || (postEditText==null && postEditCode==null)) {
 					defacePost =1;
@@ -227,7 +257,7 @@ public class AttributeDetectionMain {
 				feature.put("deface-post", defacePost);
 				feature.put("complete-change", completeChange);
 				feature.put("reputation", reputation);
-				feature.put("emotion", 0);
+//				feature.put("emotion", 0);
 				
 				Map<String, Object> results = model.predict(feature);
 				
@@ -239,10 +269,74 @@ public class AttributeDetectionMain {
 				accepted = (double) results.get("probability(0)");
 				
 				if(rejected >= accepted) {
-					System.out.println("Rejected with probability:"+rejected);
+					suggestion = "Sorry!\n" + 
+							"Your editing is more likely to be rejected due to the following potential reason(s):\n";
+					
+					if(textFormatting==1) {
+						suggestion += "You only modify the format of the text. Would you please avoid unnecessary text formatting?";
+					}
+					if(codeFormatting==1) {
+						suggestion += "You only modify the format of the code. Would you please avoid unnecessary code formatting?";
+					}
+					if(gratitude==1) {
+						suggestion += "You added/removed gratitude (e.g., thanks). Addition of gratitude is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(greeting==1) {
+						suggestion += "You added/removed greeting (e.g., hello). Addition of greeting is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(status==1) {
+						suggestion += "You added/removed personal notes. Please check. Your edit could be rejected due to the addition of unnecessary personal notes or removal of important notes.\n";
+						numberOfReason++;
+					}
+					if(deprecation==1) {
+						suggestion += "You added/removed a deprecation note inside the body of the post. Addition of a deprecation note is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(duplication==1) {
+						suggestion += "You added/removed a duplication note inside the body of the post. Addition of a duplication note is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(signature==1) {
+						suggestion += "You added a signature (e.g., your name) to the post. Addition of a signature is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(inactiveLink==1) {
+						suggestion += "It looks like you added an inactive hyperlink. Would you please avoid adding inactive links?\n";
+						numberOfReason++;
+					}
+					if(referenceModification==1) {
+						suggestion += "You modified a hyperlink. Please be sure that you are not made an undesired hyperlink modification.\n";
+						numberOfReason++;
+					}
+					if(defacePost==1) {
+						suggestion += "It looks like you deface the post. Please never deface the post.\n";
+						numberOfReason++;
+					}
+					if(completeChange==1) {
+						suggestion += "It looks like you change a code segment or textual description completely!\n";
+						numberOfReason++;
+					}
+					if(reputation<=10 && numberOfReason ==0) {
+						suggestion += "The system is predicted that your edit could be rejected due to your low reputation. However, probably your editing will not be rejected if you contribute to improving the post quality.\n";
+					}
+					
+					if(numberOfReason == 0) {
+						suggestion += "Undesired text or code may have been changed. Would you please avoid undesired code or text modifications?\n\n";
+					}
+					
+					suggestion += "Please consider the suggestion(s) to avoid rejection. Good luck!";
+					
+//					System.out.println("Rejected with probability:"+rejected);
 				}else {
-					System.out.println("Accepted with probability:"+accepted);
+					suggestion = "Good job!\n" + 
+							"Your editing is more likely to be accepted.\n" + 
+							"Thanks for your contribution to improving the quality of the posts.";
+//					System.out.println("Accepted with probability:"+accepted);
 				}
+				
+				System.out.println(suggestion);
 				
 				}
 				

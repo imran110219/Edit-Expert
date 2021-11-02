@@ -1,5 +1,13 @@
 package org.srlab.usask.editex.webpageprocessor;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,14 +20,6 @@ import org.supercsv.io.ICsvListReader;
 import org.supercsv.io.ICsvListWriter;
 import org.supercsv.prefs.CsvPreference;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class ProcessWebpage {
 	public static void main(String[] args) {
 //		FindEditData objEditData = new FindEditData();
@@ -29,7 +29,7 @@ public class ProcessWebpage {
 	}
 }
 
-class ExtractData extends Thread {
+class ExtractData extends Thread{
 		
 	public static void dataExtractor() {
 		

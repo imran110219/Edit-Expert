@@ -1,10 +1,7 @@
 package org.srlab.usask.editex.predictors;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
 
-@Component
 public class LevenshteinDistance {
 	
 	public static int calculate(String preEditText, String postEditText) {

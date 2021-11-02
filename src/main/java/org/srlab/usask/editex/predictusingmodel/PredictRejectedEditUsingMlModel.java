@@ -1,16 +1,15 @@
 package org.srlab.usask.editex.predictusingmodel;
 
-import org.pmml4s.model.Model;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.pmml4s.model.Model;
 
 public class PredictRejectedEditUsingMlModel {
 
 	public static void main(String[] args) {
-
-//		Model model = Model.fromFile("E:/Eclipse/eclipse-workspace/SOEditEx/model/model.pmml");
-		Model model = Model.fromFile("E:/Code Factory/Java/EditexConsole/model/model.pmml");
+		
+		Model model = Model.fromFile("E:/Eclipse/eclipse-workspace/SOEditEx/model/model.pmml");
 		Map<String, Object> feature = new HashMap<String, Object>();
 		
 		double rejected, accepted;

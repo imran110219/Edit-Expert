@@ -1,7 +1,5 @@
 package org.srlab.usask.editex.predictors;
 
-import org.springframework.stereotype.Component;
-
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,7 +7,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Component
 public class EditHyperLink {
 	
 	public static int detectHyperLinkModification(String preEditText, String postEditText){

@@ -1,5 +1,12 @@
 package org.srlab.usask.editex.webpageprocessor;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -8,10 +15,6 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvListReader;
 import org.supercsv.io.ICsvListReader;
 import org.supercsv.prefs.CsvPreference;
-
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java.util.List;
 
 public class DataSetForEmotionDetection {
 	

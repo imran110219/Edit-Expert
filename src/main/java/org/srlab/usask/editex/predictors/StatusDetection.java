@@ -1,13 +1,10 @@
 package org.srlab.usask.editex.predictors;
 
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Component
 public class StatusDetection{
 	
 	public static int detectStatus(String preEditText, String postEditText){

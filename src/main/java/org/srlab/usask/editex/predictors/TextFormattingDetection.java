@@ -1,10 +1,10 @@
 package org.srlab.usask.editex.predictors;
 
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 public class TextFormattingDetection {
 	

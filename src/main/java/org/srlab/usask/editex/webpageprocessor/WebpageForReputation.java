@@ -1,18 +1,25 @@
 package org.srlab.usask.editex.webpageprocessor;
 
-import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.io.CsvListReader;
-import org.supercsv.io.ICsvListReader;
-import org.supercsv.prefs.CsvPreference;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvListReader;
+import org.supercsv.io.ICsvListReader;
+import org.supercsv.prefs.CsvPreference;
 
 public class WebpageForReputation {
 	public static void main(String[] args) throws IOException {
@@ -42,7 +49,7 @@ class WebPageSaver{
 			for (int i = 0; i <listOfFiles.length; i++) {
 			      if (listOfFiles[i].isFile()) {
 			    	  String srcFile=listOfFiles[i].getName();
-			    	  String[] fileparts = srcFile.split("\\.");
+			    	  String [] fileparts = srcFile.split("\\.");
 			    	  String filename = fileparts[0];
 			    	  existingFiles.add(filename);
 			      }

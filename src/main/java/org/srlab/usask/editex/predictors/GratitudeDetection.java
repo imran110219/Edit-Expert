@@ -1,13 +1,10 @@
 package org.srlab.usask.editex.predictors;
 
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Component
 public class GratitudeDetection {
 	
 	public static int detectGratitute(String preEditText, String postEditText){
