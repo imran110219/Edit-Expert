@@ -329,7 +329,46 @@ public class AttributeDetectionMain {
 					suggestion += "Please consider the suggestion(s) to avoid rejection. Good luck!";
 					
 //					System.out.println("Rejected with probability:"+rejected);
-				}else {
+				}
+				else if(gratitude==1 || greeting==1 || signature==1 || deprecation==1 || duplication==1 || inactiveLink==1 || defacePost==1) {
+
+					suggestion = "Sorry!\n" +
+							"Your editing is more likely to be rejected due to the following potential reason(s):\n";
+
+					if(gratitude==1) {
+						suggestion += "You added/removed gratitude (e.g., thanks). Addition of gratitude is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(greeting==1) {
+						suggestion += "You added/removed greeting (e.g., hello). Addition of greeting is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(deprecation==1) {
+						suggestion += "You added/removed a deprecation note inside the body of the post. Addition of a deprecation note is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(duplication==1) {
+						suggestion += "You added/removed a duplication note inside the body of the post. Addition of a duplication note is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(signature==1) {
+						suggestion += "You added a signature (e.g., your name) to the post. Addition of a signature is often rejected later.\n";
+						numberOfReason++;
+					}
+					if(inactiveLink==1) {
+						suggestion += "It looks like you added an inactive hyperlink. Would you please avoid adding inactive links?\n";
+						numberOfReason++;
+					}
+					if(defacePost==1) {
+						suggestion += "It looks like you deface the post. Please never deface the post.\n";
+						numberOfReason++;
+					}
+
+					suggestion += "Please consider the suggestion(s) to avoid rejection. Good luck!\n";
+
+				}
+				else {
+
 					suggestion = "Good job!\n" + 
 							"Your editing is more likely to be accepted.\n" + 
 							"Thanks for your contribution to improving the quality of the posts.";

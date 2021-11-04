@@ -1,0 +1,49 @@
+postId,guiId,revisionNo,editStatus,preEditText,postEditText,rollbackUserId,rollbackUserName,rollbackDateTime,prevEditUserId,prevEditUserName,prevEditDateTime
+18,5f06d7f5-01c3-485e-8d10-32b6a2f870ea,2,edited,"I just wanted to configure pjsip and i wanted to learn what is the pjsip linker for qtcreator. But i had some errors. First i got the pjsip from official site. After 
+
+./configure --prefix=/usr --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr CFLAGS='-O2 -DNDEBUG'
+
+make dep && make
+
+
+
+make install
+
+So far everything is OK.
+But when i try 
+
+(pkg-config --libs pjsip) command i got this output : 
+
+root@ubuntu:/home/UTS/pjproject-2.11.1# pkg-config --libs pjsip
+Package pjsip was not found in the pkg-config search path.
+Perhaps you should add the directory containing `pjsip.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'pjsip' found","I just wanted to configure pjsip and i wanted to learn what is the pjsip linker for qtcreator. But i had some errors. First i got the pjsip from official site. After 
+
+./configure --prefix=/usr --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr CFLAGS='-O2 -DNDEBUG'
+
+make dep && make
+
+
+
+make install
+
+So far everything is OK.
+But when i try 
+
+(pkg-config --libs pjsip) command i got this output : 
+
+root@ubuntu:/home/UTS/pjproject-2.11.1# pkg-config --libs pjsip
+Package pjsip was not found in the pkg-config search path.
+Perhaps you should add the directory containing `pjsip.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'pjsip' found",6068,pupeno,5/28/2009 11:40,inactive,phpguy,8/1/2008 5:12
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
