@@ -51,28 +51,27 @@ public class EditHyperLink {
 		try {
 			
 			Pattern hyperlinkPattern = Pattern.compile("(\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|])");
-			Matcher hyperlinkMatcherPreText = hyperlinkPattern.matcher(preEditText);
-			//Matcher hyperlinkMatcherPostText = hyperlinkPattern.matcher(postEditText);
+			//Matcher hyperlinkMatcherPreText = hyperlinkPattern.matcher(preEditText);
+			Matcher hyperlinkMatcherPostText = hyperlinkPattern.matcher(postEditText);
 			
-			while(hyperlinkMatcherPreText.find() && inactiveLink==0) {
-				
-				try {
-					URL url = new URL(hyperlinkMatcherPreText.group(0));
-					HttpURLConnection con = (HttpURLConnection) url.openConnection();
-					con.setRequestMethod("HEAD");
-					
-					if(con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-						//System.out.println("Active:"+hyperlinkMatcherPreText.group(0));
-					}
-					
-				} catch (Exception e) {
-					inactiveLink=1;
-					//System.out.println("Inactive Link:"+hyperlinkMatcherPreText.group(0));
-				}
-				
-			}						
+//			while(hyperlinkMatcherPreText.find() && inactiveLink==0) {
+//				
+//				try {
+//					URL url = new URL(hyperlinkMatcherPreText.group(0));
+//					HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//					con.setRequestMethod("HEAD");
+//					
+//					if(con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+//						//System.out.println("Active:"+hyperlinkMatcherPreText.group(0));
+//					}
+//					
+//				} catch (Exception e) {
+//					inactiveLink=1;
+//					//System.out.println("Inactive Link:"+hyperlinkMatcherPreText.group(0));
+//				}
+//				
+//			}						
 			
-			/********
 			while(hyperlinkMatcherPostText.find() && inactiveLink==0) {
 				try {
 					URL url = new URL(hyperlinkMatcherPostText.group(0));
@@ -80,16 +79,16 @@ public class EditHyperLink {
 					con.setRequestMethod("HEAD");
 					
 					if(con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-						System.out.println("Active:"+hyperlinkMatcherPostText.group(0));
+						//System.out.println("Active:"+hyperlinkMatcherPostText.group(0));
 					}
 					
 				} catch (Exception e) {
 					inactiveLink=1;
-					System.out.println("Inactive Link:"+hyperlinkMatcherPreText.group(0));
+					//System.out.println("Inactive Link:"+hyperlinkMatcherPostText.group(0));
 				}
 				
 			}
-			**********/
+			
 			
 		}
 		catch (Exception e) {

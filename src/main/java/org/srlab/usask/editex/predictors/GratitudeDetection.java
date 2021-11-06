@@ -13,23 +13,23 @@ public class GratitudeDetection {
 		try {
 			
 			Pattern gratitudePattern = Pattern.compile("(\\bwelcome\\b|\\bthanks\\b|\\bsorry\\b|\\bappreciated\\b|\\bthank\\b|\\bty\\b|\\bthx\\b|\\bregards\\b|\\btia\\b)");
-			Matcher gratitudeMatcherPreText = gratitudePattern.matcher(preEditText);
+//			Matcher gratitudeMatcherPreText = gratitudePattern.matcher(preEditText);
 			Matcher gratitudeMatcherPostText = gratitudePattern.matcher(postEditText);
 			
-			List<String> preGratitudeList = new ArrayList<String>();
-			List<String> postGratitudeList = new ArrayList<String>();
+//			List<String> preGratitudeList = new ArrayList<String>();
+//			List<String> postGratitudeList = new ArrayList<String>();
 			
-			while(gratitudeMatcherPreText.find()) {
-				preGratitudeList.add(gratitudeMatcherPreText.group(0));
-			}						
+//			while(gratitudeMatcherPreText.find()) {
+//				preGratitudeList.add(gratitudeMatcherPreText.group(0));
+//			}						
 			
-			while(gratitudeMatcherPostText.find()) {
-				postGratitudeList.add(gratitudeMatcherPostText.group(0));
-			}
-			
-			if(!preGratitudeList.equals(postGratitudeList)){
+			if(gratitudeMatcherPostText.find()) {
+				//postGratitudeList.add(gratitudeMatcherPostText.group(0));
 				gratitute=1;
 			}
+//			if(!preGratitudeList.equals(postGratitudeList)){
+//				gratitute=1;
+//			}
 			else {
 				gratitute=0;
 				
