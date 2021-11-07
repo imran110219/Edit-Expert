@@ -155,8 +155,8 @@ public class EditExService {
         inactiveLink = EditHyperLink.detectInactiveHyperlink(preEditText, postEditText);
         referenceModification = EditHyperLink.detectHyperLinkModification(preEditText, postEditText);
 
-        if(((preEditText.length()!=0 || !preEditText.isEmpty()) && (postEditText.length()==0 || postEditText.isEmpty())) || ((!preEditCode.isEmpty() || preEditCode.length()!=0) && (postEditCode.length()==0 || postEditCode.isEmpty()))) {
-            defacePost =1;
+        if (((preEditText.length() != 0 || !preEditText.isEmpty()) && (postEditText.length() == 0 || postEditText.isEmpty())) || ((!preEditCode.isEmpty() || preEditCode.length() != 0) && (postEditCode.length() == 0 || postEditCode.isEmpty()))) {
+            defacePost = 1;
         }
 
         if ((preEditText != null && !preEditText.isEmpty()) || (postEditText != null && !postEditText.isEmpty())) {
@@ -217,7 +217,8 @@ public class EditExService {
 
         ResultDTO resultDTO = new ResultDTO();
 
-        if((rejected - accepted) >= 0.20) {
+        if ((rejected - accepted) >= 0.25) {
+            //System.out.println(rejected+"  "+ accepted);
             suggestion = "Sorry!\n" +
                     "Your editing is more likely to be rejected due to the following potential reason(s):\n\n";
 
@@ -232,12 +233,12 @@ public class EditExService {
                 reasonNo++;
             }
             if (gratitude == 1) {
-                suggestion += "Reason " + reasonNo + ": You added/removed gratitude (e.g., thanks). Addition of gratitude is often rejected later.\n";
+                suggestion += "Reason " + reasonNo + ": It looks like there is a gratitude (e.g., thanks, sorry). Addition of gratitude is often rejected later.\n";
                 numberOfReason++;
                 reasonNo++;
             }
             if (greeting == 1) {
-                suggestion += "Reason " + reasonNo + ": You added/removed greeting (e.g., hello). Addition of greeting is often rejected later.\n";
+                suggestion += "Reason " + reasonNo + ": It looks like there is a greeting (e.g., hi, hello, dear). Addition of greeting is often rejected later.\n";
                 numberOfReason++;
                 reasonNo++;
             }
@@ -262,13 +263,13 @@ public class EditExService {
                 reasonNo++;
             }
             if (inactiveLink == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you added an inactive hyperlink. Would you please avoid adding inactive links?\n";
+                suggestion += "Reason " + reasonNo + ": It looks like there is an inactive hyperlink. Would you please avoid adding inactive links?\n";
                 numberOfReason++;
                 reasonNo++;
             }
 
-            if(defacePost==1) {
-                suggestion += "Reason "+reasonNo+": It looks like you deface the post. Please never deface the post.\n";
+            if (defacePost == 1) {
+                suggestion += "Reason " + reasonNo + ": It looks like you deface the previous code segment or textual description of the post. Would you please avoid the unnecessary complete removal of a code segment or problem description?\n";
                 numberOfReason++;
                 reasonNo++;
             }
@@ -289,7 +290,6 @@ public class EditExService {
             }
 
             suggestion += "\nPlease consider the suggestion(s) to avoid rejection. Good luck!\n";
-
             resultDTO.setPermission("Rejected");
         } else if (gratitude == 1 || greeting == 1 || signature == 1 || deprecation == 1 || duplication == 1 || inactiveLink == 1 || defacePost == 1 || textFormatting == 1 || codeFormatting == 1) {
 
@@ -297,12 +297,12 @@ public class EditExService {
                     "Your editing is more likely to be rejected due to the following potential reason(s):\n\n";
 
             if (gratitude == 1) {
-                suggestion += "Reason " + reasonNo + ": You added/removed gratitude (e.g., thanks). Addition of gratitude is often rejected later.\n";
+                suggestion += "Reason " + reasonNo + ": It looks like there is a gratitude (e.g., thanks, sorry). Addition of gratitude is often rejected later.\n";
                 numberOfReason++;
                 reasonNo++;
             }
             if (greeting == 1) {
-                suggestion += "Reason " + reasonNo + ": You added/removed greeting (e.g., hello). Addition of greeting is often rejected later.\n";
+                suggestion += "Reason " + reasonNo + ": It looks like there is a greeting (e.g., hi, hello, dear). Addition of greeting is often rejected later.\n";
                 numberOfReason++;
                 reasonNo++;
             }
@@ -322,12 +322,12 @@ public class EditExService {
                 reasonNo++;
             }
             if (inactiveLink == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you added an inactive hyperlink. Would you please avoid adding inactive links?\n";
+                suggestion += "Reason " + reasonNo + ": It looks like there is an inactive hyperlink. Would you please avoid adding inactive links?\n";
                 numberOfReason++;
                 reasonNo++;
             }
-            if(defacePost==1) {
-                suggestion += "Reason "+reasonNo+": It looks like you deface the post. Please never deface the post.\n";
+            if (defacePost == 1) {
+                suggestion += "Reason " + reasonNo + ": It looks like you deface the previous code segment or textual description of the post. Would you please avoid the unnecessary complete removal of a code segment or problem description?\n";
                 numberOfReason++;
                 reasonNo++;
             }
@@ -344,7 +344,6 @@ public class EditExService {
 
             suggestion += "\nPlease consider the suggestion(s) to avoid rejection. Good luck!\n";
             resultDTO.setPermission("Rejected");
-
         } else {
             suggestion = "Good job!\n" +
                     "Your editing is more likely to be accepted.\n" +
