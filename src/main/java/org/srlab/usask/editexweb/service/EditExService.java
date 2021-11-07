@@ -61,6 +61,11 @@ public class EditExService {
         int defacePost = 0;
         int completeChange = 0;
 
+        int defaceCode = 0;
+        int defaceText = 0;
+        int completeChangeCode = 0;
+        int completeChangeText = 0;
+
         int reputation = 0;
 
         String suggestion = "";
@@ -155,27 +160,34 @@ public class EditExService {
         inactiveLink = EditHyperLink.detectInactiveHyperlink(preEditText, postEditText);
         referenceModification = EditHyperLink.detectHyperLinkModification(preEditText, postEditText);
 
-        if (((preEditText.length() != 0 || !preEditText.isEmpty()) && (postEditText.length() == 0 || postEditText.isEmpty())) || ((!preEditCode.isEmpty() || preEditCode.length() != 0) && (postEditCode.length() == 0 || postEditCode.isEmpty()))) {
+        if ((preEditText.length() != 0 || !preEditText.isEmpty()) && (postEditText.length() == 0 || postEditText.isEmpty())) {
             defacePost = 1;
+            defaceText = 1;
+        }
+        if ((!preEditCode.isEmpty() || preEditCode.length() != 0) && (postEditCode.length() == 0 || postEditCode.isEmpty())) {
+            defacePost = 1;
+            defaceCode = 1;
         }
 
-        if ((preEditText != null && !preEditText.isEmpty()) || (postEditText != null && !postEditText.isEmpty())) {
+        if ((!preEditText.isEmpty()) && (!postEditText.isEmpty())) {
 
             editDistance = 0; //reset edit distance value
             editDistance = LevenshteinDistance.calculate(preEditText, postEditText);
 
             if (editDistance == preEditText.length() || editDistance == postEditText.length()) {
                 completeChange = 1;
+                completeChangeText = 1;
             }
         }
 
-        if ((preEditCode != null && !preEditCode.isEmpty()) || (postEditCode != null && !postEditCode.isEmpty())) {
+        if ((!preEditCode.isEmpty()) && (!postEditCode.isEmpty())) {
 
             editDistance = 0; //reset edit distance value
             editDistance = LevenshteinDistance.calculate(preEditCode, postEditCode);
 
             if (editDistance == preEditCode.length() || editDistance == postEditCode.length()) {
                 completeChange = 1;
+                completeChangeCode = 1;
             }
         }
 
@@ -223,12 +235,12 @@ public class EditExService {
                     "Your editing is more likely to be rejected due to the following potential reason(s):\n\n";
 
             if (textFormatting == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you only modify the format of the text. Would you please avoid unnecessary text formatting?\n";
+                suggestion += "Reason " + reasonNo + ": It looks like you only modified the format of the text. Would you please avoid unnecessary text formatting?\n";
                 numberOfReason++;
                 reasonNo++;
             }
             if (codeFormatting == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you only modify the format of the code. Would you please avoid unnecessary code formatting?\n";
+                suggestion += "Reason " + reasonNo + ": It looks like you only modified the format of the code. Would you please avoid unnecessary code formatting?\n";
                 numberOfReason++;
                 reasonNo++;
             }
@@ -268,28 +280,55 @@ public class EditExService {
                 reasonNo++;
             }
 
-            if (defacePost == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you deface the previous code segment or textual description of the post. Would you please avoid the unnecessary complete removal of a code segment or problem description?\n";
+            if (defaceText == 1) {
+                suggestion += "Reason " + reasonNo + ": It looks like you defaced the previous textual description of the post. Would you please avoid the unnecessary complete removal of problem description?\n";
                 numberOfReason++;
                 reasonNo++;
             }
-            if (completeChange == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you change a code segment or textual description completely!\n";
+            if (defaceCode == 1) {
+                suggestion += "Reason " + reasonNo + ": It looks like you defaced the previous code segment of the post. Would you please avoid the unnecessary complete removal of a code segment?\n";
                 numberOfReason++;
                 reasonNo++;
             }
-            if (reputation <= 10 && numberOfReason == 0) {
+            if (completeChangeText == 1) {
+                suggestion += "Reason " + reasonNo + ": It looks like you changed textual description completely!\n";
+                numberOfReason++;
+                reasonNo++;
+            }
+            if (completeChangeCode == 1) {
+                suggestion += "Reason " + reasonNo + ": It looks like you changed a code segment completely!\n";
+                numberOfReason++;
+                reasonNo++;
+            }
+            if (reputation < 1000 && numberOfReason == 0) {
                 suggestion += "Reason " + reasonNo + ": The system is predicted that your edit could be rejected due to your low reputation. However, probably your editing will not be rejected if you contribute to improving the post quality.\n";
                 numberOfReason++;
                 reasonNo++;
             }
 
-            if (numberOfReason == 0) {
-                suggestion += "Reason " + reasonNo + ": System detected that there might be undesired changes of text or code. Would you please avoid undesired code or text modifications? If you conduct the required changes of text/code, go ahead with your edits.\n";
+            if (codeChange > 50.0 && preEditCode.length() > 0 && postEditCode.length() > 0) {
+                suggestion += "Reason " + reasonNo + ": System detected that there might be undesired changes of code. Would you please avoid undesired code modifications? If you conduct the required changes of code, go ahead with your edits.\n";
+                numberOfReason++;
+                reasonNo++;
+            }
+
+            if ((textChange > 30.0 && textChange < 50.0) && preEditText.length() > 0 && postEditText.length() > 0) {
+                suggestion += "Reason " + reasonNo + ": System detected that there might be undesired changes of text. Would you please avoid undesired text modifications? If you conduct the required changes of text, go ahead with your edits.\n";
+                numberOfReason++;
                 reasonNo++;
             }
 
             suggestion += "\nPlease consider the suggestion(s) to avoid rejection. Good luck!\n";
+
+            if (numberOfReason == 0) {
+//						suggestion += "Reason "+reasonNo+": System detected that there might be undesired changes of text or code. Would you please avoid undesired code or text modifications? If you conduct the required changes of text/code, go ahead with your edits.\n";
+//						reasonNo++;
+
+                suggestion = "Good job!\n" +
+                        "Your editing is more likely to be accepted.\n" +
+                        "Thanks for your contribution to improving the quality of the posts.\n";
+            }
+
             resultDTO.setPermission("Rejected");
         } else if (gratitude == 1 || greeting == 1 || signature == 1 || deprecation == 1 || duplication == 1 || inactiveLink == 1 || defacePost == 1 || textFormatting == 1 || codeFormatting == 1) {
 
@@ -326,24 +365,30 @@ public class EditExService {
                 numberOfReason++;
                 reasonNo++;
             }
-            if (defacePost == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you deface the previous code segment or textual description of the post. Would you please avoid the unnecessary complete removal of a code segment or problem description?\n";
+            if (defaceText == 1) {
+                suggestion += "Reason " + reasonNo + ": It looks like you defaced the previous textual description of the post. Would you please avoid the unnecessary complete removal of problem description?\n";
+                numberOfReason++;
+                reasonNo++;
+            }
+            if (defaceCode == 1) {
+                suggestion += "Reason " + reasonNo + ": It looks like you defaced the previous code segment of the post. Would you please avoid the unnecessary complete removal of a code segment?\n";
                 numberOfReason++;
                 reasonNo++;
             }
             if (textFormatting == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you only modify the format of the text. Would you please avoid unnecessary text formatting?\n";
+                suggestion += "Reason " + reasonNo + ": It looks like you only modified the format of the text. Would you please avoid unnecessary text formatting?\n";
                 numberOfReason++;
                 reasonNo++;
             }
             if (codeFormatting == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like you only modify the format of the code. Would you please avoid unnecessary code formatting?\n";
+                suggestion += "Reason " + reasonNo + ": It looks like you only modified the format of the code. Would you please avoid unnecessary code formatting?\n";
                 numberOfReason++;
                 reasonNo++;
             }
 
             suggestion += "\nPlease consider the suggestion(s) to avoid rejection. Good luck!\n";
             resultDTO.setPermission("Rejected");
+
         } else {
             suggestion = "Good job!\n" +
                     "Your editing is more likely to be accepted.\n" +
