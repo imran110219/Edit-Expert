@@ -217,7 +217,7 @@ public class EditExService {
 
         ResultDTO resultDTO = new ResultDTO();
 
-        if (rejected >= accepted) {
+        if((rejected - accepted) >= 0.20) {
             suggestion = "Sorry!\n" +
                     "Your editing is more likely to be rejected due to the following potential reason(s):\n\n";
 
@@ -284,7 +284,7 @@ public class EditExService {
             }
 
             if (numberOfReason == 0) {
-                suggestion += "Reason " + reasonNo + ": Undesired text or code may have been changed. Would you please avoid undesired code or text modifications?\n";
+                suggestion += "Reason " + reasonNo + ": System detected that there might be undesired changes of text or code. Would you please avoid undesired code or text modifications? If you conduct the required changes of text/code, go ahead with your edits.\n";
                 reasonNo++;
             }
 
