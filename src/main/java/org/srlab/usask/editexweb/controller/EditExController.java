@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.srlab.usask.editexweb.dto.EditTextDTO;
 import org.srlab.usask.editexweb.dto.ResultDTO;
 import org.srlab.usask.editexweb.service.EditExService;
+import org.srlab.usask.editexweb.service.IEditService;
 
 /**
  * @author Sadman
@@ -16,13 +17,14 @@ import org.srlab.usask.editexweb.service.EditExService;
 public class EditExController {
 
     @Autowired
-    EditExService editExService;
+//    EditExService service;
+    IEditService service;
 
 //    @Autowired
 //    AttributeDetectionService attributeDetectionService;
 
     @PostMapping("/edit")
     public ResponseEntity<ResultDTO> editAnalysis(@RequestBody EditTextDTO editTextDTO) {
-        return ResponseEntity.ok(editExService.detect(editTextDTO));
+        return ResponseEntity.ok(service.detect(editTextDTO));
     }
 }
