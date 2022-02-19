@@ -157,7 +157,7 @@ public class EditExService {
         duplication = DuplicationDetection.detectDeprecation(preEditText.toLowerCase(), postEditText.toLowerCase());
         signature = SignatureDetection.detectSignature(postEditText.toLowerCase(), rollbackUserName.toLowerCase());
 
-        inactiveLink = EditHyperLink.detectInactiveHyperlink(preEditText, postEditText);
+        inactiveLink = EditHyperLink.detectInactiveHyperlink(preEditDoc, postEditDoc);
         referenceModification = EditHyperLink.detectHyperLinkModification(preEditText, postEditText);
 
         if ((preEditText.length() != 0 || !preEditText.isEmpty()) && (postEditText.length() == 0 || postEditText.isEmpty())) {
@@ -275,7 +275,7 @@ public class EditExService {
                 reasonNo++;
             }
             if (inactiveLink == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like there is an inactive hyperlink. Would you please avoid adding inactive links?\n";
+                suggestion += "Reason " + reasonNo + ": It looks like there is an inactive hyperlink. Would you please check the link and avoid adding inactive links?\n";
                 numberOfReason++;
                 reasonNo++;
             }
@@ -300,7 +300,7 @@ public class EditExService {
                 numberOfReason++;
                 reasonNo++;
             }
-            if (reputation < 1000 && numberOfReason == 0) {
+            if (reputation < 10 && numberOfReason == 0) {
                 suggestion += "Reason " + reasonNo + ": The system is predicted that your edit could be rejected due to your low reputation. However, probably your editing will not be rejected if you contribute to improving the post quality.\n";
                 numberOfReason++;
                 reasonNo++;
@@ -312,7 +312,7 @@ public class EditExService {
                 reasonNo++;
             }
 
-            if ((textChange > 30.0 && textChange < 50.0) && preEditText.length() > 0 && postEditText.length() > 0) {
+            if ((textChange > 40.0 && textChange < 50.0) && preEditText.length() > 0 && postEditText.length() > 0) {
                 suggestion += "Reason " + reasonNo + ": System detected that there might be undesired changes of text. Would you please avoid undesired text modifications? If you conduct the required changes of text, go ahead with your edits.\n";
                 numberOfReason++;
                 reasonNo++;
@@ -361,7 +361,7 @@ public class EditExService {
                 reasonNo++;
             }
             if (inactiveLink == 1) {
-                suggestion += "Reason " + reasonNo + ": It looks like there is an inactive hyperlink. Would you please avoid adding inactive links?\n";
+                suggestion += "Reason " + reasonNo + ": It looks like there is an inactive hyperlink. Would you please check the link and avoid adding inactive links?\n";
                 numberOfReason++;
                 reasonNo++;
             }
