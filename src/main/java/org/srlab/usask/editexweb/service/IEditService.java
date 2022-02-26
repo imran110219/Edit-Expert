@@ -22,8 +22,8 @@ public class IEditService {
     public ResultDTO detect(EditTextDTO editTextDTO) {
         Parser parser = Parser.builder().build();
 
-        Document preEditDoc = null;
-        Document postEditDoc = null;
+//        Document preEditDoc = null;
+//        Document postEditDoc = null;
         Elements preText = null;
         Elements postText = null;
 
@@ -41,32 +41,51 @@ public class IEditService {
         List<Integer> statusInconsistency = new ArrayList<Integer>();
         List<Integer> signatureInconsistency = new ArrayList<Integer>();
 
-        Node preTextDocument = null;
-        Node postTextDocument = null;
+//        Node preTextDocument = null;
+//        Node postTextDocument = null;
+//
+//
+//        preEditDoc = Jsoup.parse(editTextDTO.getPreText());
+//
+//        //Parse markup to HTML
+//        preTextDocument = parser.parse(preEditDoc.toString());
+//        HtmlRenderer renderer = HtmlRenderer.builder().build();
+//        renderer.render(preTextDocument);  // "<p>This is <em>Sparta</em></p>\n"
+//        preEditDoc = Jsoup.parse(renderer.render(preTextDocument));
+//
+//        preText = preEditDoc.select("p");
+//        preEditText = preText.text().toString();
+//
+//        postEditDoc = Jsoup.parse(editTextDTO.getPostText());
+//
+//        //Parse markup to HTML
+//        postTextDocument = parser.parse(postEditDoc.toString());
+//        HtmlRenderer rendererPost = HtmlRenderer.builder().build();
+//        rendererPost.render(postTextDocument);  // "<p>This is <em>Sparta</em></p>\n"
+//        postEditDoc = Jsoup.parse(rendererPost.render(postTextDocument));
+////				System.out.println(postEditDoc);
+//
+//        postText = postEditDoc.select("p");
+//        postEditText = postText.text().toString();
 
-
-        preEditDoc = Jsoup.parse(editTextDTO.getPreText());
-
-        //Parse markup to HTML
-        preTextDocument = parser.parse(preEditDoc.toString());
+        ///sfdssf
+        Node preTextDocument = parser.parse(editTextDTO.getPreText());
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         renderer.render(preTextDocument);  // "<p>This is <em>Sparta</em></p>\n"
-        preEditDoc = Jsoup.parse(renderer.render(preTextDocument));
-
+        Document preEditDoc = Jsoup.parse(renderer.render(preTextDocument));
         preText = preEditDoc.select("p");
         preEditText = preText.text().toString();
 
-        postEditDoc = Jsoup.parse(editTextDTO.getPostText());
 
-        //Parse markup to HTML
-        postTextDocument = parser.parse(postEditDoc.toString());
+        Node postTextDocument = parser.parse(editTextDTO.getPostText());
         HtmlRenderer rendererPost = HtmlRenderer.builder().build();
         rendererPost.render(postTextDocument);  // "<p>This is <em>Sparta</em></p>\n"
-        postEditDoc = Jsoup.parse(rendererPost.render(postTextDocument));
-//				System.out.println(postEditDoc);
+        Document postEditDoc = Jsoup.parse(renderer.render(postTextDocument));
+//					System.out.println(preEditDoc);
 
         postText = postEditDoc.select("p");
         postEditText = postText.text().toString();
+        ///dfds
 
         userName = editTextDTO.getRollbackUserName();
         String[] names = userName.split(" ");

@@ -17,14 +17,21 @@ import org.srlab.usask.editexweb.service.IEditService;
 public class EditExController {
 
     @Autowired
-//    EditExService service;
-    IEditService service;
+    EditExService editExService;
+
+    @Autowired
+    IEditService iEditService;
 
 //    @Autowired
 //    AttributeDetectionService attributeDetectionService;
 
+    @PostMapping("/editex")
+    public ResponseEntity<ResultDTO> editExAnalysis(@RequestBody EditTextDTO editTextDTO) {
+        return ResponseEntity.ok(editExService.detect(editTextDTO));
+    }
+
     @PostMapping("/edit")
-    public ResponseEntity<ResultDTO> editAnalysis(@RequestBody EditTextDTO editTextDTO) {
-        return ResponseEntity.ok(service.detect(editTextDTO));
+    public ResponseEntity<ResultDTO> iEditAnalysis(@RequestBody EditTextDTO editTextDTO) {
+        return ResponseEntity.ok(iEditService.detect(editTextDTO));
     }
 }
