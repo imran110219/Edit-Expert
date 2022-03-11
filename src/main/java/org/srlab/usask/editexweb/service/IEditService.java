@@ -112,73 +112,73 @@ public class IEditService {
 
             suggestion = "It looks like your suggested edits have the following inconsistency:\n";
 
-            if (presentationInconsistency.get(0) == 1) {
-                if (presentationInconsistency.get(1) == 1) {
+            if(presentationInconsistency.get(0) == 1) {
+                if(presentationInconsistency.get(1) == 1) {
                     suggestion += "\nPresentation Inconsistency: You formatted text elements as code elements. "
                             + "\nCould you please double-check that those formatted elements are code elements?"
-                            + "\nHowever, such formatting has x% of rejection possibility.\n";
+                            + "\nHowever, such formatting has 74.8% of rejection possibility.\n";
                     inconsistencyCount++;
-                } else {
+                }else {
                     suggestion += "\nPresentation Inconsistency: You formatted code elements as text elements. "
                             + "\nCould you please double-check that those formatted elements are text elements?"
-                            + "\nHowever, such formatting has x% of rejection possibility.\n";
+                            + "\nHowever, such formatting has 25.2% of rejection possibility.\n";
                     inconsistencyCount++;
                 }
 
             }
-            if (gratitudeInconsistency.get(0) == 1) {
-                if (gratitudeInconsistency.get(1) == 1) {
+            if(gratitudeInconsistency.get(0) == 1) {
+                if(gratitudeInconsistency.get(1)== 1) {
                     suggestion += "\nGratitudinal Inconsistency: Your suggested edit has a gratitude/emotion (e.g., thanks)."
-                            + "\nHowever, the addition of such signature has x% of rejection possibility.\n";
+                            + "\nHowever, the addition of such signature has 49.7% of rejection possibility.\n";
                     inconsistencyCount++;
-                } else {
+                }else {
                     suggestion += "\nGratitudinal Inconsistency: Your suggested edit has deleted a gratitude/emotion (e.g., thanks)."
-                            + "\nHowever, the deletion of such signature has x% of rejection possibility.\n";
+                            + "\nHowever, the deletion of such signature has 50.3% of rejection possibility.\n";
                     inconsistencyCount++;
                 }
             }
-            if (signatureInconsistency.get(0) == 1) {
-                if (signatureInconsistency.get(1) == 1) {
+            if(signatureInconsistency.get(0) == 1) {
+                if(signatureInconsistency.get(1) == 1) {
                     suggestion += "\nSignature Inconsistency: Your suggested edit has a signature (e.g., user name)."
-                            + "\nHowever, the addition of such signature has x% of rejection possibility.";
+                            + "\nHowever, the addition of such signature has 57.9% of rejection possibility.";
                     inconsistencyCount++;
-                } else {
+                }else {
                     suggestion += "\nSignature Inconsistency: Your suggested edit has deleted a signature (e.g., user name)."
-                            + "\nHowever, the deletion of such signature has x% of rejection possibility.\n";
+                            + "\nHowever, the deletion of such signature has 42.1% of rejection possibility.\n";
                     inconsistencyCount++;
                 }
 
             }
-            if (statusInconsistency.get(0) == 1) {
-                if (statusInconsistency.get(1) == 1) {
+            if(statusInconsistency.get(0) == 1) {
+                if(statusInconsistency.get(1) == 1) {
                     suggestion += "\nStatus Inconsistency: Your suggested edit has personal notes. Make sure the personal notes are necessary."
-                            + "\nHowever, the addition of such personal notes has x% of rejection possibility.\n";
+                            + "\nHowever, the addition of such personal notes has 70.5% of rejection possibility.\n";
                     inconsistencyCount++;
-                } else {
+                }else {
                     suggestion += "\nStatus Inconsistency: Your suggested edit deletes personal notes. Make sure the personal notes are not necessary."
-                            + "\nHowever, the deletion of such personal notes has x% of rejection possibility.\n";
+                            + "\nHowever, the deletion of such personal notes has 29.5% of rejection possibility.\n";
                     inconsistencyCount++;
                 }
             }
-            if (deprecationInconsistency.get(0) == 1) {
-                if (deprecationInconsistency.get(1) == 1) {
+            if(deprecationInconsistency.get(0) == 1) {
+                if(deprecationInconsistency.get(1) == 1) {
                     suggestion += "\nDeprecation Inconsistency: Your suggested edit has a deprecation note. Please make sure the code is deprecated."
-                            + "\nHowever, the addition of such deprecation note inside the body of a post has x% of rejection possibility.\n";
+                            + "\nHowever, the addition of such deprecation note inside the body of a post has 46.7% of rejection possibility.\n";
                     inconsistencyCount++;
-                } else {
+                }else {
                     suggestion += "\nDeprecation Inconsistency: Your suggested edit has deleted a deprecation note. Please make sure the code is not deprecated."
-                            + "\nHowever, the deletion of such deprecation note inside the body of a post has x% of rejection possibility.\n";
+                            + "\nHowever, the deletion of such deprecation note inside the body of a post has 53.3% of rejection possibility.\n";
                     inconsistencyCount++;
                 }
             }
-            if (duplicationInconsistency.get(0) == 1) {
-                if (duplicationInconsistency.get(1) == 1) {
+            if(duplicationInconsistency.get(0) == 1) {
+                if(duplicationInconsistency.get(1) == 1) {
                     suggestion += "\nDuplication Inconsistency: Your suggested edit has a duplication note. Please make sure that this is a duplicate of another post."
-                            + "\nHowever, the addition of such duplication note inside the body of a post has x% of rejection possibility.\n";
+                            + "\nHowever, the addition of such duplication note inside the body of a post has 65.1% of rejection possibility.\n";
                     inconsistencyCount++;
-                } else {
+                }else {
                     suggestion += "\nDuplication Inconsistency: Your suggested edit has deleted a duplication note. Please make sure that this is not a duplicate of another post."
-                            + "\nHowever, the deletion of such duplication note inside the body of a post has x% of rejection possibility.\n";
+                            + "\nHowever, the deletion of such duplication note inside the body of a post has 34.9% of rejection possibility.\n";
                     inconsistencyCount++;
                 }
             }
