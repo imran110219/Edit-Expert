@@ -129,11 +129,11 @@ public class IEditService {
             if(gratitudeInconsistency.get(0) == 1) {
                 if(gratitudeInconsistency.get(1)== 1) {
                     suggestion += "\nGratitudinal Inconsistency: Your suggested edit has a gratitude/emotion (e.g., thanks)."
-                            + "\nHowever, the addition of such signature has 49.7% of rejection possibility by rollback.\n";
+                            + "\nHowever, the addition of such gratitude/emotion has 49.7% of rejection possibility by rollback.\n";
                     inconsistencyCount++;
                 }else {
                     suggestion += "\nGratitudinal Inconsistency: Your suggested edit has deleted a gratitude/emotion (e.g., thanks)."
-                            + "\nHowever, the deletion of such signature has 50.3% of rejection possibility by rollback.\n";
+                            + "\nHowever, the deletion of such gratitude/emotion has 50.3% of rejection possibility by rollback.\n";
                     inconsistencyCount++;
                 }
             }
